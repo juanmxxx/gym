@@ -1,22 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:gym/services/services.dart';
+import 'package:gym/services/ejercicios_services.dart';
 import 'screens.dart';
 import 'package:provider/provider.dart';
 
-class AdministracionScreen extends StatelessWidget {
+class AdministracionScreen extends StatefulWidget {
+  @override
+  _AdministracionScreenState createState() => _AdministracionScreenState();
+}
+
+class _AdministracionScreenState extends State<AdministracionScreen> {
   @override
   Widget build(BuildContext context) {
     final ejerciciosServices = Provider.of<EjerciciosServices>(context);
+    List<String> tipos =
+        ejerciciosServices.ejercicios.map((e) => e.tipo).toSet().toList();
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Ejercicios'),
       ),
       body: ListView.builder(
-          itemCount: ejerciciosServices.ejercicios.length,
-          itemBuilder: (BuildContext context, int index) => ExercicesCard(
-                ejercicio: ejerciciosServices.ejercicios[index],
-              )),
+        itemCount: tipos.length,
+        itemBuilder: (BuildContext context, int index) {
+          final tipo = tipos[index];
+          final ejercicios = ejerciciosServices.ejercicios
+              .where((e) => e.tipo == tipo)
+              .toList();
+          return Card(
+            child: ExpansionTile(
+              title: Text(tipo),
+              children: List.generate(
+                ejercicios.length,
+                (index) => ExercicesCard(
+                  ejercicio: ejerciciosServices.ejercicios[index],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
       bottomNavigationBar: MenuScreen(
         onTap: (index) {
           switch (index) {

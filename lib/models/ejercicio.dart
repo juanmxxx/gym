@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class GymTfgDefaultRtdbExport {
-  Map<String, EjercicioLocal> ejercicios;
+  Map<String, Ejercicio> ejercicios;
 
   GymTfgDefaultRtdbExport({
     required this.ejercicios,
@@ -14,8 +14,8 @@ class GymTfgDefaultRtdbExport {
 
   factory GymTfgDefaultRtdbExport.fromJson(Map<String, dynamic> json) =>
       GymTfgDefaultRtdbExport(
-        ejercicios: Map.from(json["ejercicios"]).map((k, v) =>
-            MapEntry<String, EjercicioLocal>(k, EjercicioLocal.fromJson(v))),
+        ejercicios: Map.from(json["ejercicios"]).map(
+            (k, v) => MapEntry<String, Ejercicio>(k, Ejercicio.fromJson(v))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -24,26 +24,25 @@ class GymTfgDefaultRtdbExport {
       };
 }
 
-class EjercicioLocal {
+class Ejercicio {
   String? imagen;
   String nombre;
   bool polea;
   String tipo;
-  String? id;
 
-  EjercicioLocal({
+  Ejercicio({
     this.imagen,
     required this.nombre,
     required this.polea,
     required this.tipo,
   });
 
-  factory EjercicioLocal.fromRawJson(String str) =>
-      EjercicioLocal.fromJson(json.decode(str));
+  factory Ejercicio.fromRawJson(String str) =>
+      Ejercicio.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory EjercicioLocal.fromJson(Map<String, dynamic> json) => EjercicioLocal(
+  factory Ejercicio.fromJson(Map<String, dynamic> json) => Ejercicio(
         imagen: json["imagen"],
         nombre: json["nombre"],
         polea: json["polea"],

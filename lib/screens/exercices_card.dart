@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gym/models/models.dart';
+import 'package:gym/models/ejercicio.dart';
 
 class ExercicesCard extends StatefulWidget {
-  final EjercicioLocal ejercicio;
+  final Ejercicio ejercicio;
 
   const ExercicesCard({super.key, required this.ejercicio});
 
@@ -12,7 +12,7 @@ class ExercicesCard extends StatefulWidget {
 }
 
 class _ExercicesCardState extends State<ExercicesCard> {
-  final EjercicioLocal ejercicio;
+  final Ejercicio ejercicio;
 
   final TextEditingController seriesController = TextEditingController();
   final TextEditingController repetitionsController = TextEditingController();

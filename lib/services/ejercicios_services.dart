@@ -1,20 +1,20 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:gym/models/models.dart';
+import 'package:gym/models/ejercicio.dart';
 
 class EjerciciosServices extends ChangeNotifier {
   final String _baseURL =
       'gym-tfg-default-rtdb.europe-west1.firebasedatabase.app';
 
-  final List<EjercicioLocal> _ejercicios = [];
+  final List<Ejercicio> _ejercicios = [];
   bool _isLoading = true;
 
   EjerciciosServices() {
-    this.loadEjercicios();
+    loadEjercicios();
   }
 
-  Future<List<EjercicioLocal>> loadEjercicios() async {
+  Future<List<Ejercicio>> loadEjercicios() async {
     _isLoading = true;
     notifyListeners();
 
@@ -23,17 +23,14 @@ class EjerciciosServices extends ChangeNotifier {
 
     final Map<String, dynamic> ejerciciosMap = json.decode(response.body);
     ejerciciosMap.forEach((key, value) {
-      final tempEjercicio = EjercicioLocal.fromJson(value);
-      tempEjercicio.id = key;
+      final tempEjercicio = Ejercicio.fromJson(value);
 
       _ejercicios.add(tempEjercicio);
     });
-
-    //this._isLoading = false;
+    print("Todo correcto hasta aqui");
     notifyListeners();
-
-    return this._ejercicios;
+    return _ejercicios;
   }
 
-  List<EjercicioLocal> get ejercicios => this._ejercicios;
+  List<Ejercicio> get ejercicios => _ejercicios;
 }

@@ -9,7 +9,8 @@ import 'package:gym/local/database/database.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final db = await $FloorDatabaseHelper.databaseBuilder('database.db').build();
-  runApp(MyApp(db: db));
+  //runApp(MyApp(db: db));
+  runApp(AppState());
 }
 
 class MyApp extends StatelessWidget {
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'LightWeight Gym',
-      initialRoute: 'prueba',
+      //initialRoute: 'entrenamiento',
       routes: {
         'entrenamiento': (_) => EntrenamientoScreen(),
         'administrar': (_) => AdministracionScreen(),

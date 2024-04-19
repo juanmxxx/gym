@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gym/local/database/database.dart';
 import 'package:gym/models/ejercicio_local.dart';
+import 'prueba_leer_ejercicios.dart';
 
 class PruebaEjerScreen extends StatefulWidget {
   final DatabaseHelper db;
@@ -125,7 +126,7 @@ class _PruebaEjerScreenState extends State<PruebaEjerScreen> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              PruebaEjerScreen(db: widget.db)));
+                              PruebaLeerEjerScreen(db: widget.db)));
                 },
                 child: const Text('Leer ejercicios')),
           ]),
