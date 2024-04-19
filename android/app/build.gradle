@@ -24,7 +24,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.example.gym"
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -35,6 +35,8 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
