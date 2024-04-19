@@ -119,6 +119,15 @@ class _PruebaEjerScreenState extends State<PruebaEjerScreen> {
               },
               child: Text('Save'),
             ),
+            ElevatedButton(
+                onPressed: () async {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              PruebaEjerScreen(db: widget.db)));
+                },
+                child: const Text('Leer ejercicios')),
           ]),
         ));
   }
