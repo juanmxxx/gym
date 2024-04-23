@@ -8,6 +8,7 @@ class EjerciciosServices extends ChangeNotifier {
       'gym-tfg-default-rtdb.europe-west1.firebasedatabase.app';
 
   final List<Ejercicio> _ejercicios = [];
+  Ejercicio? _selectedEjercicio;
   bool _isLoading = true;
 
   EjerciciosServices() {
@@ -33,4 +34,11 @@ class EjerciciosServices extends ChangeNotifier {
   }
 
   List<Ejercicio> get ejercicios => _ejercicios;
+
+  Ejercicio? get selectedEjercicio => _selectedEjercicio;
+
+  set selectedEjercicio(Ejercicio? ejercicio) {
+    _selectedEjercicio = ejercicio;
+    notifyListeners();
+  }
 }

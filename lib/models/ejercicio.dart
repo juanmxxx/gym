@@ -29,12 +29,16 @@ class Ejercicio {
   String nombre;
   bool polea;
   String tipo;
+  String descripcion;
+  String gif_ayuda;
 
   Ejercicio({
     this.imagen,
     required this.nombre,
     required this.polea,
     required this.tipo,
+    required this.descripcion,
+    required this.gif_ayuda,
   });
 
   factory Ejercicio.fromRawJson(String str) =>
@@ -47,6 +51,8 @@ class Ejercicio {
         nombre: json["nombre"],
         polea: json["polea"],
         tipo: json["tipo"],
+        descripcion: json["descripcion"],
+        gif_ayuda: json["gif_ayuda"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -54,5 +60,16 @@ class Ejercicio {
         "nombre": nombre,
         "polea": polea,
         "tipo": tipo,
+        "descripcion": descripcion,
+        "gif_ayuda": gif_ayuda,
       };
+
+  Ejercicio copy() => Ejercicio(
+        imagen: imagen,
+        nombre: nombre,
+        polea: polea,
+        tipo: tipo,
+        descripcion: descripcion,
+        gif_ayuda: gif_ayuda,
+      );
 }

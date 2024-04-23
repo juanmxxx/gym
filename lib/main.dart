@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:gym/services/ejercicios_services.dart';
 import 'package:gym/screens/prueba.dart';
 import 'package:gym/local/database/database.dart';
+import 'package:gym/screens/ejercicio_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
       routes: {
         'entrenamiento': (_) => EntrenamientoScreen(),
         'administrar': (_) => AdministracionScreen(),
-        'prueba': (context) => PruebaEjerScreen(db: db)
+        'prueba': (context) => PruebaEjerScreen(db: db),
+        'ejercicio': (context) => EjercicioScreen(),
       },
       theme: ThemeData.light().copyWith(
           scaffoldBackgroundColor: Colors.grey[200],

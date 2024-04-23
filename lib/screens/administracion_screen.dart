@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gym/screens/ejercicio_screen.dart';
 import 'package:gym/services/ejercicios_services.dart';
 import 'screens.dart';
 import 'package:provider/provider.dart';
@@ -31,8 +32,15 @@ class _AdministracionScreenState extends State<AdministracionScreen> {
               title: Text(tipo),
               children: List.generate(
                 ejercicios.length,
-                (index) => ExercicesCard(
-                  ejercicio: ejerciciosServices.ejercicios[index],
+                (index) => GestureDetector(
+                  onTap: () {
+                    ejerciciosServices.selectedEjercicio =
+                        ejercicios[index].copy();
+                    Navigator.pushNamed(context, 'ejercicio');
+                  },
+                  child: ExercicesCard(
+                    ejercicio: ejercicios[index],
+                  ),
                 ),
               ),
             ),
