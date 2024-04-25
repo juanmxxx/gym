@@ -78,7 +78,7 @@ class _PruebaEjerScreenState extends State<PruebaEjerScreen> {
                 labelText: 'Día de la semana',
               ),
             ),
-            ElevatedButton(
+            /*  ElevatedButton(
               onPressed: () async {
                 final String nombre1 = nombre.text;
                 final imagen1 = imagen.text;
@@ -119,7 +119,7 @@ class _PruebaEjerScreenState extends State<PruebaEjerScreen> {
                 await widget.db.ejercicioDao.insertEjercicio(ejercicio);
               },
               child: Text('Save'),
-            ),
+            ), */
             ElevatedButton(
                 onPressed: () async {
                   Navigator.push(

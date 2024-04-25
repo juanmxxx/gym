@@ -27,7 +27,6 @@ class GymTfgDefaultRtdbExport {
 class Ejercicio {
   String? imagen;
   String nombre;
-  bool polea;
   String tipo;
   String descripcion;
   String gif_ayuda;
@@ -35,7 +34,6 @@ class Ejercicio {
   Ejercicio({
     this.imagen,
     required this.nombre,
-    required this.polea,
     required this.tipo,
     required this.descripcion,
     required this.gif_ayuda,
@@ -49,7 +47,6 @@ class Ejercicio {
   factory Ejercicio.fromJson(Map<String, dynamic> json) => Ejercicio(
         imagen: json["imagen"],
         nombre: json["nombre"],
-        polea: json["polea"],
         tipo: json["tipo"],
         descripcion: json["descripcion"],
         gif_ayuda: json["gif_ayuda"],
@@ -58,7 +55,6 @@ class Ejercicio {
   Map<String, dynamic> toJson() => {
         "imagen": imagen,
         "nombre": nombre,
-        "polea": polea,
         "tipo": tipo,
         "descripcion": descripcion,
         "gif_ayuda": gif_ayuda,
@@ -67,7 +63,6 @@ class Ejercicio {
   Ejercicio copy() => Ejercicio(
         imagen: imagen,
         nombre: nombre,
-        polea: polea,
         tipo: tipo,
         descripcion: descripcion,
         gif_ayuda: gif_ayuda,

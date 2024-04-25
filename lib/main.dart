@@ -4,13 +4,9 @@ import 'package:gym/screens/entrenamiento_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:gym/services/ejercicios_services.dart';
 import 'package:gym/screens/prueba.dart';
-import 'package:gym/local/database/database.dart';
 import 'package:gym/screens/ejercicio_screen.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  final db = await $FloorDatabaseHelper.databaseBuilder('database.db').build();
-  //runApp(MyApp(db: db));
   runApp(AppState());
 }
 

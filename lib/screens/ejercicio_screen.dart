@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gym/services/services.dart';
 import 'package:provider/provider.dart';
+import 'package:gym/models/ejercicio.dart';
+import 'package:gym/services/submit_to_local.dart';
 
 class EjercicioScreen extends StatelessWidget {
   @override
@@ -16,7 +18,7 @@ class EjercicioScreen extends StatelessWidget {
             child: Column(
               children: [
                 ButtonsRow(nombre: nombre),
-                EjercicioImage(url: gif),
+                EjerciseImage(url: gif),
                 Description(descripcion: descripcion),
               ],
             ),
@@ -26,40 +28,44 @@ class EjercicioScreen extends StatelessWidget {
       floatingActionButton: SubmitEjercise(),
     );
   }
+/* 
+  void setEjercicio(Ejercicio ejercicio) {
+    this.ejercicio = ejercicio;
+  }
+
+  Ejercicio getEjercicio() {
+    return ejercicio;
+  } */
 }
 
-class EjercicioImage extends StatelessWidget {
+class EjerciseImage extends StatelessWidget {
   final String url;
 
-  EjercicioImage({required this.url});
+  EjerciseImage({required this.url});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: 10, right: 10, top: 10),
-      child: Container(
-        width: double.infinity,
-        height: 300,
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: Offset(0, 3),
-            )
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: url == null
-              ? Image(
-                  image: AssetImage('assets/no_image.png'), fit: BoxFit.cover)
-              : FadeInImage(
-                  image: NetworkImage(url),
-                  placeholder: AssetImage('assets/gym.gif'),
-                ),
-        ),
+    return Container(
+      width: double.infinity,
+      height: 300,
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3),
+          )
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: url == null
+            ? Image(image: AssetImage('assets/no_image.png'), fit: BoxFit.cover)
+            : FadeInImage(
+                image: NetworkImage(url),
+                placeholder: AssetImage('assets/gym.gif'),
+              ),
       ),
     );
   }
@@ -71,26 +77,23 @@ class ButtonsRow extends StatelessWidget {
   ButtonsRow({required this.nombre});
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-        top: 10,
-        left: 10,
-        child: Container(
-          margin: EdgeInsets.only(top: 50),
-          child: Row(
-            children: [
-              IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: Icon(
-                  Icons.arrow_back_ios_new,
-                  size: 40,
-                  color: Colors.white,
-                ),
-              ),
-              SizedBox(width: 10), // Add some space between the buttons
-              Text(nombre, style: TextStyle(fontSize: 25, color: Colors.black)),
-            ],
+    return Padding(
+      padding: EdgeInsets.only(top: 60, left: 10),
+      child: Row(
+        children: [
+          IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: Icon(
+              Icons.arrow_back_ios_new,
+              size: 40,
+              color: Colors.white,
+            ),
           ),
-        ));
+          SizedBox(width: 10), // Add some space between the buttons
+          Text(nombre, style: TextStyle(fontSize: 25, color: Colors.black)),
+        ],
+      ),
+    );
   }
 }
 
@@ -140,9 +143,14 @@ class ExerciseForm extends StatefulWidget {
 
 class _ExerciseFormState extends State<ExerciseForm> {
   String dropdownValue = 'Lunes';
-
+  TextEditingController peso = TextEditingController();
+  TextEditingController repeticiones = TextEditingController();
+  TextEditingController series = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final ejercicioService = Provider.of<EjerciciosServices>(context);
+    Ejercicio ejercicioFinal = ejercicioService.selectedEjercicio!;
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -150,14 +158,17 @@ class _ExerciseFormState extends State<ExerciseForm> {
         children: <Widget>[
           Text('Weight:'),
           TextField(
+            controller: peso,
             keyboardType: TextInputType.number,
           ),
           Text('Series:'),
           TextField(
+            controller: series,
             keyboardType: TextInputType.number,
           ),
           Text('Repetitions:'),
           TextField(
+            controller: repeticiones,
             keyboardType: TextInputType.number,
           ),
           Text('Day of Week:'),
@@ -186,6 +197,18 @@ class _ExerciseFormState extends State<ExerciseForm> {
           ElevatedButton(
             onPressed: () {
               // Handle the form submission
+              print('Peso: ${peso.text}');
+              print('Series: ${series.text}');
+              print('Repetitions: ${repeticiones.text}');
+              print('Dia: $dropdownValue');
+
+              SubmitToLocal(
+                  ejercicio: ejercicioFinal,
+                  repeticiones: int.parse(repeticiones.text),
+                  series: int.parse(series.text),
+                  peso: int.parse(peso.text),
+                  diaSemana: dropdownValue);
+              Navigator.pop(context);
             },
             child: Text('Submit'),
           ),

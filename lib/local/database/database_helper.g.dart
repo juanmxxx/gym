@@ -86,7 +86,7 @@ class _$DatabaseHelper extends DatabaseHelper {
       onCreate: (database, version) async {
         //Meter otro create table con un await
         await database.execute(
-          'CREATE TABLE IF NOT EXISTS `Ejercicio` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT NOT NULL, `description` TEXT NOT NULL, `image` TEXT NOT NULL, `reps` INTEGER NOT NULL, `sets` INTEGER NOT NULL, `weight` INTEGER NOT NULL, `dayOfWeek` TEXT NOT NULL)',
+          'CREATE TABLE IF NOT EXISTS `Ejercicio` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT NOT NULL, `description` TEXT NOT NULL, `image` TEXT NOT NULL, `reps` INTEGER NOT NULL, `sets` INTEGER NOT NULL, `weight` INTEGER NOT NULL, `dayOfWeek` TEXT NOT NULL, `type` TEXT NOT NULL, `gifhelp` TEXT NOT NULL)',
         );
 
         await callback?.onCreate?.call(database, version);
@@ -115,7 +115,9 @@ class _$EjerciseDao extends EjercicioDao {
                   'reps': item.repeticiones,
                   'sets': item.series,
                   'weight': item.peso,
-                  'dayOfWeek': item.dayOfWeek
+                  'dayOfWeek': item.dayOfWeek,
+                  'type': item.tipo,
+                  'gifhelp': item.gifAyuda
                 }),
         _ejercicioUpdateAdapter = UpdateAdapter(
             database,
@@ -129,7 +131,9 @@ class _$EjerciseDao extends EjercicioDao {
                   'reps': item.repeticiones,
                   'sets': item.series,
                   'weight': item.peso,
-                  'dayOfWeek': item.dayOfWeek
+                  'dayOfWeek': item.dayOfWeek,
+                  'type': item.tipo,
+                  'gifhelp': item.gifAyuda
                 }),
         _ejercicioDeletionAdapter = DeletionAdapter(
             database,
@@ -143,7 +147,9 @@ class _$EjerciseDao extends EjercicioDao {
                   'reps': item.repeticiones,
                   'sets': item.series,
                   'weight': item.peso,
-                  'dayOfWeek': item.dayOfWeek
+                  'dayOfWeek': item.dayOfWeek,
+                  'type': item.tipo,
+                  'gifhelp': item.gifAyuda
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -169,7 +175,9 @@ class _$EjerciseDao extends EjercicioDao {
             dayOfWeek: row['dayOfWeek'] as String,
             peso: row['weight'] as int,
             repeticiones: row['reps'] as int,
-            series: row['sets'] as int));
+            series: row['sets'] as int,
+            gifAyuda: row['gifhelp'] as String,
+            tipo: row['type'] as String));
   }
 
   @override

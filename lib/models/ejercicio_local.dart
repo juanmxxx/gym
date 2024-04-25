@@ -12,6 +12,8 @@ class EjercicioLocal {
   final int repeticiones;
   final int series;
   final String dayOfWeek;
+  final String gifAyuda;
+  final String tipo;
 
   EjercicioLocal(
       {this.id,
@@ -21,5 +23,7 @@ class EjercicioLocal {
       required this.peso,
       required this.repeticiones,
       required this.series,
-      required this.dayOfWeek});
+      required this.dayOfWeek,
+      required this.gifAyuda,
+      required this.tipo});
 }

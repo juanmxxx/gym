@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as https;
 import 'package:gym/models/ejercicio.dart';
 
 class EjerciciosServices extends ChangeNotifier {
@@ -14,21 +14,19 @@ class EjerciciosServices extends ChangeNotifier {
   EjerciciosServices() {
     loadEjercicios();
   }
-
+  // Ahora esto no fufa
   Future<List<Ejercicio>> loadEjercicios() async {
     _isLoading = true;
     notifyListeners();
 
     final url = Uri.https(_baseURL, 'ejercicios.json');
-    final response = await http.get(url);
-
+    final response = await https.get(url);
     final Map<String, dynamic> ejerciciosMap = json.decode(response.body);
     ejerciciosMap.forEach((key, value) {
       final tempEjercicio = Ejercicio.fromJson(value);
 
       _ejercicios.add(tempEjercicio);
     });
-    print("Todo correcto hasta aqui");
     notifyListeners();
     return _ejercicios;
   }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gym/screens/ejercicio_screen.dart';
 import 'package:gym/services/ejercicios_services.dart';
 import 'screens.dart';
 import 'package:provider/provider.dart';
@@ -13,9 +12,9 @@ class _AdministracionScreenState extends State<AdministracionScreen> {
   @override
   Widget build(BuildContext context) {
     final ejerciciosServices = Provider.of<EjerciciosServices>(context);
+    print("Cantidad de ejercicios: ${ejerciciosServices.ejercicios.length}");
     List<String> tipos =
         ejerciciosServices.ejercicios.map((e) => e.tipo).toSet().toList();
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Ejercicios'),
