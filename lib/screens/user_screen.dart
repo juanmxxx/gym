@@ -1,0 +1,125 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:gym/models/parametros_personales.dart';
+import 'package:gym/screens/menu_screen.dart';
+import 'package:gym/screens/user/user_params_screen.dart';
+import 'package:gym/screens/user/TBM_calculator_screen.dart';
+import 'package:gym/local/database/database_helper.dart';
+
+class UsuarioScreen extends StatefulWidget {
+  const UsuarioScreen({Key? key}) : super(key: key);
+
+  @override
+  _UsuarioScreenState createState() => _UsuarioScreenState();
+}
+
+class _UsuarioScreenState extends State<UsuarioScreen> {
+  ParametrosPersonales? parametrosUsuario;
+  late final DatabaseHelper db;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsFlutterBinding.ensureInitialized();
+
+    Future.microtask(() async {
+      await initializeDatabase();
+    });
+  }
+
+  Future<void> initializeDatabase() async {
+    final db =
+        await $FloorDatabaseHelper.databaseBuilder('database.db').build();
+    parametrosUsuario = await db.parametrosPersonalesDao.readFirst();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Ajustes'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: <Widget>[
+            GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UsuarioParametrosScreen(
+                      parametrosUsuario: parametrosUsuario!),
+                ),
+              ),
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.person, size: 30),
+                  SizedBox(width: 20),
+                  Text(
+                    'Usuario',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10),
+            Row(
+              children: <Widget>[
+                Icon(Icons.lock, size: 30),
+                SizedBox(width: 20),
+                Text(
+                  'Privacidad',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TBMCalculatorScreen(
+                      parametrosUsuario: parametrosUsuario!),
+                ),
+              ),
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.calculate, size: 30),
+                  SizedBox(width: 20),
+                  Text(
+                    'Calculadora TMB (Basal)',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10),
+            Row(
+              children: <Widget>[
+                Icon(Icons.adjust, size: 30),
+                SizedBox(width: 20),
+                Text(
+                  'Medidas musculares',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: MenuScreen(onTap: (index) {
+        switch (index) {
+          case 1:
+            Navigator.pushNamed(context, 'administrar');
+            break;
+          case 2:
+            Navigator.pushNamed(context, 'ayuda');
+            break;
+          case 3:
+            Navigator.pushNamed(context, 'configuracion');
+            break;
+        }
+      }),
+    );
+  }
+}

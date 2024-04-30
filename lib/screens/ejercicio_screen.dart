@@ -202,7 +202,7 @@ class _ExerciseFormState extends State<ExerciseForm> {
               print('Repetitions: ${repeticiones.text}');
               print('Dia: $dropdownValue');
 
-              SubmitToLocal(
+              SubmitToLocalEjercise(
                   ejercicio: ejercicioFinal,
                   repeticiones: int.parse(repeticiones.text),
                   series: int.parse(series.text),

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gym/models/ejercicio.dart';
 import 'package:gym/local/database/database.dart';
 import 'package:gym/models/ejercicio_local.dart';
+import 'package:gym/models/parametros_personales.dart';
 
-class SubmitToLocal {
+class SubmitToLocalEjercise {
   final Ejercicio ejercicio;
   final int repeticiones;
   final int series;
@@ -11,7 +12,7 @@ class SubmitToLocal {
   final String diaSemana;
   late final DatabaseHelper db;
 
-  SubmitToLocal(
+  SubmitToLocalEjercise(
       {required this.ejercicio,
       required this.repeticiones,
       required this.series,
@@ -42,5 +43,27 @@ class SubmitToLocal {
       dayOfWeek: diaSemana,
     );
     await db.ejercicioDao.insertEjercicio(ejercicioLocal);
+  }
+}
+
+class SubmitToLocalParametros {
+  final ParametrosPersonales parametros;
+  late final DatabaseHelper db;
+
+  SubmitToLocalParametros({required this.parametros}) {
+    WidgetsFlutterBinding.ensureInitialized();
+    Future.microtask(() async {
+      await initializeDatabase();
+      await submitParametros();
+    });
+  }
+
+  Future<void> initializeDatabase() async {
+    db = await $FloorDatabaseHelper.databaseBuilder('database.db').build();
+  }
+
+  Future<void> submitParametros() async {
+    print("Guardando parametros personales en la base de datos local");
+    await db.parametrosPersonalesDao.insertParametros(parametros);
   }
 }
