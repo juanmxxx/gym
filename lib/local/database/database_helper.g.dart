@@ -89,10 +89,14 @@ class _$DatabaseHelper extends DatabaseHelper {
         await database.execute(
           'CREATE TABLE IF NOT EXISTS `Ejercicio` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT NOT NULL, `description` TEXT NOT NULL, `image` TEXT NOT NULL, `reps` INTEGER NOT NULL, `sets` INTEGER NOT NULL, `weight` INTEGER NOT NULL, `dayOfWeek` TEXT NOT NULL, `type` TEXT NOT NULL, `gifhelp` TEXT NOT NULL)',
         );
+
         await database.execute(
-          'CREATE TABLE IF NOT EXISTS `ParametrosPersonales` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `peso` INTEGER NOT NULL, `altura` INTEGER NOT NULL, `edad` INTEGER NOT NULL, `sexo` INTEGER NOT NULL)',
+          'CREATE TABLE IF NOT EXISTS `MedidasMusculares` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `brazo` DOUBLE, `pecho` DOUBLE, `cintura` DOUBLE, `torso` DOUBLE, `gemelos` DOUBLE, `antebrazo` DOUBLE, `abdominales` DOUBLE, `gluteos` DOUBLE)',
         );
 
+        await database.execute(
+          'CREATE TABLE IF NOT EXISTS `ParametrosPersonales` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `peso` INTEGER, `altura` INTEGER, `edad` INTEGER, `sexo` INTEGER, `medidasMuscularesId` INTEGER, FOREIGN KEY(`medidasMuscularesId`) REFERENCES `MedidasMusculares`(`id`))',
+        );
         await callback?.onCreate?.call(database, version);
       },
     );
@@ -109,6 +113,125 @@ class _$DatabaseHelper extends DatabaseHelper {
     return _parametrosPersonalesDaoInstance ??=
         _$ParametrosPersonalesDao(database, changeListener);
   }
+
+  @override
+  MedidasMuscularesDao get medidasMuscularesDao {
+    return _$MedidasMuscularesDao(database, changeListener);
+  }
+}
+
+class _$MedidasMuscularesDao extends MedidasMuscularesDao {
+  _$MedidasMuscularesDao(this.database, this.changeListener)
+      : _queryAdapter = QueryAdapter(database),
+        _medidasMuscularesInsertionAdapter = InsertionAdapter(
+            database,
+            'MedidasMusculares',
+            (MedidasMusculares item) => <String, Object?>{
+                  'id': item.id,
+                  'brazo': item.brazo,
+                  'pecho': item.pecho,
+                  'cintura': item.cintura,
+                  'torso': item.torso,
+                  'gemelos': item.gemelos,
+                  'antebrazo': item.antebrazo,
+                  'abs': item.abs,
+                  'gluteos': item.gluteos
+                }),
+        _medidasMuscularesUpdateAdapter = UpdateAdapter(
+            database,
+            'MedidasMusculares',
+            ['id'],
+            (MedidasMusculares item) => <String, Object?>{
+                  'id': item.id,
+                  'brazo': item.brazo,
+                  'pecho': item.pecho,
+                  'cintura': item.cintura,
+                  'torso': item.torso,
+                  'gemelos': item.gemelos,
+                  'antebrazo': item.antebrazo,
+                  'abs': item.abs,
+                  'gluteos': item.gluteos
+                }),
+        _medidasMuscularesDeletionAdapter = DeletionAdapter(
+            database,
+            'MedidasMusculares',
+            ['id'],
+            (MedidasMusculares item) => <String, Object?>{
+                  'id': item.id,
+                  'brazo': item.brazo,
+                  'pecho': item.pecho,
+                  'cintura': item.cintura,
+                  'torso': item.torso,
+                  'gemelos': item.gemelos,
+                  'antebrazo': item.antebrazo,
+                  'abs': item.abs,
+                  'gluteos': item.gluteos
+                });
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<MedidasMusculares> _medidasMuscularesInsertionAdapter;
+
+  final UpdateAdapter<MedidasMusculares> _medidasMuscularesUpdateAdapter;
+
+  final DeletionAdapter<MedidasMusculares> _medidasMuscularesDeletionAdapter;
+
+  @override
+  Future<List<MedidasMusculares>> readAll() async {
+    return _queryAdapter.queryList('SELECT * FROM MedidasMusculares',
+        mapper: (Map<String, Object?> row) => MedidasMusculares(
+            id: row['id'] as int?,
+            brazo: row['brazo'] as double,
+            pecho: row['pecho'] as double,
+            cintura: row['cintura'] as double,
+            torso: row['torso'] as double,
+            gemelos: row['gemelos'] as double,
+            antebrazo: row['antebrazo'] as double,
+            abs: row['abs'] as double,
+            gluteos: row['gluteos'] as double));
+  }
+
+  @override
+  Future<MedidasMusculares?> readFirst() async {
+    return _queryAdapter.query(
+        'SELECT * FROM MedidasMusculares ORDER BY id ASC LIMIT 1',
+        mapper: (Map<String, Object?> row) => MedidasMusculares(
+            id: row['id'] as int?,
+            brazo: row['brazo'] as double,
+            pecho: row['pecho'] as double,
+            cintura: row['cintura'] as double,
+            torso: row['torso'] as double,
+            gemelos: row['gemelos'] as double,
+            antebrazo: row['antebrazo'] as double,
+            abs: row['abs'] as double,
+            gluteos: row['gluteos'] as double));
+  }
+
+  Future<int?> getRowCount() async {
+    return _queryAdapter.query('SELECT COUNT(*) FROM MedidasMusculares',
+        mapper: (Map<String, Object?> row) => row['COUNT(*)'] as int);
+  }
+
+  @override
+  Future<int> insertMedidas(MedidasMusculares medidas) {
+    return _medidasMuscularesInsertionAdapter.insertAndReturnId(
+        medidas, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> updateMedidas(MedidasMusculares medidas) async {
+    await _medidasMuscularesUpdateAdapter.update(
+        medidas, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> deleteMedidas(MedidasMusculares medidas) async {
+    await _medidasMuscularesDeletionAdapter.delete(medidas);
+  }
 }
 
 class _$ParametrosPersonalesDao extends ParametrosPersonalesDao {
@@ -122,7 +245,8 @@ class _$ParametrosPersonalesDao extends ParametrosPersonalesDao {
                   'peso': item.peso,
                   'edad': item.edad,
                   'altura': item.altura,
-                  'sexo': item.sexo
+                  'sexo': item.sexo,
+                  'medidasMuscularesId': item.idMedidasMusculares
                 }),
         _parametrosPersonalesUpdateAdapter = UpdateAdapter(
             database,
@@ -133,7 +257,8 @@ class _$ParametrosPersonalesDao extends ParametrosPersonalesDao {
                   'peso': item.peso,
                   'edad': item.edad,
                   'altura': item.altura,
-                  'sexo': item.sexo
+                  'sexo': item.sexo,
+                  'medidasMuscularesId': item.idMedidasMusculares
                 }),
         _parametrosPersonalesDeletionAdapter = DeletionAdapter(
             database,
@@ -144,7 +269,8 @@ class _$ParametrosPersonalesDao extends ParametrosPersonalesDao {
                   'peso': item.peso,
                   'edad': item.edad,
                   'altura': item.altura,
-                  'sexo': item.sexo
+                  'sexo': item.sexo,
+                  'medidasMuscularesId': item.idMedidasMusculares
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -169,7 +295,8 @@ class _$ParametrosPersonalesDao extends ParametrosPersonalesDao {
             peso: row['peso'] as int,
             edad: row['edad'] as int,
             altura: row['altura'] as int,
-            sexo: row['sexo'] as int));
+            sexo: row['sexo'] as int,
+            idMedidasMusculares: row['medidasMuscularesId'] as int?));
   }
 
   @override
@@ -181,7 +308,8 @@ class _$ParametrosPersonalesDao extends ParametrosPersonalesDao {
             peso: row['peso'] as int,
             edad: row['edad'] as int,
             altura: row['altura'] as int,
-            sexo: row['sexo'] as int));
+            sexo: row['sexo'] as int,
+            idMedidasMusculares: row['medidasMuscularesId'] as int?));
   }
 
   @override

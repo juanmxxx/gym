@@ -53,7 +53,7 @@ class _AdministracionScreenState extends State<AdministracionScreen> {
               Navigator.pushNamed(context, 'entrenamiento');
               break;
             case 2:
-              Navigator.pushNamed(context, 'ayuda');
+              Navigator.pushNamed(context, 'tips');
               break;
             case 3:
               Navigator.pushNamed(context, 'configuracion');

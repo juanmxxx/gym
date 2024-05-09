@@ -5,6 +5,8 @@ import 'package:gym/screens/menu_screen.dart';
 import 'package:gym/screens/user/user_params_screen.dart';
 import 'package:gym/screens/user/TBM_calculator_screen.dart';
 import 'package:gym/local/database/database_helper.dart';
+import 'package:gym/screens/user/muscle_measure_screen.dart';
+import 'package:gym/models/medidas_musculares.dart';
 
 class UsuarioScreen extends StatefulWidget {
   const UsuarioScreen({Key? key}) : super(key: key);
@@ -14,7 +16,8 @@ class UsuarioScreen extends StatefulWidget {
 }
 
 class _UsuarioScreenState extends State<UsuarioScreen> {
-  ParametrosPersonales? parametrosUsuario;
+  late ParametrosPersonales? parametrosUsuario;
+  late MedidasMusculares? medidasMusculares;
   late final DatabaseHelper db;
 
   @override
@@ -28,9 +31,28 @@ class _UsuarioScreenState extends State<UsuarioScreen> {
   }
 
   Future<void> initializeDatabase() async {
-    final db =
-        await $FloorDatabaseHelper.databaseBuilder('database.db').build();
+    db = await $FloorDatabaseHelper.databaseBuilder('database.db').build();
     parametrosUsuario = await db.parametrosPersonalesDao.readFirst();
+
+    if ((await db.medidasMuscularesDao.getRowCount()) == 0) {
+      await initializeMusculos();
+    }
+
+    medidasMusculares = await db.medidasMuscularesDao.readFirst();
+  }
+
+  Future<void> initializeMusculos() async {
+    medidasMusculares = MedidasMusculares(
+        brazo: 0,
+        cintura: 0,
+        pecho: 0,
+        gemelos: 0,
+        gluteos: 0,
+        abs: 0,
+        torso: 0,
+        antebrazo: 0);
+
+    await db.medidasMuscularesDao.insertMedidas(medidasMusculares!);
   }
 
   @override
@@ -94,29 +116,39 @@ class _UsuarioScreenState extends State<UsuarioScreen> {
               ),
             ),
             SizedBox(height: 10),
-            Row(
-              children: <Widget>[
-                Icon(Icons.adjust, size: 30),
-                SizedBox(width: 20),
-                Text(
-                  'Medidas musculares',
-                  style: TextStyle(fontSize: 20),
+            GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MuscleMeasureScreen(
+                    medidasMusculares: medidasMusculares!,
+                  ),
                 ),
-              ],
+              ),
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.center_focus_strong, size: 30),
+                  SizedBox(width: 20),
+                  Text(
+                    'Medidas musculares',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
       ),
       bottomNavigationBar: MenuScreen(onTap: (index) {
         switch (index) {
+          case 0:
+            Navigator.pushNamed(context, 'entrenamiento');
+            break;
           case 1:
             Navigator.pushNamed(context, 'administrar');
             break;
           case 2:
-            Navigator.pushNamed(context, 'ayuda');
-            break;
-          case 3:
-            Navigator.pushNamed(context, 'configuracion');
+            Navigator.pushNamed(context, 'tips');
             break;
         }
       }),

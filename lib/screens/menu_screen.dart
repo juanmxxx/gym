@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 
-class MenuScreen extends StatelessWidget {
+class MenuScreen extends StatefulWidget {
   final Function(int) onTap;
 
   MenuScreen({required this.onTap});
+
+  @override
+  _MenuScreenState createState() => _MenuScreenState();
+}
+
+class _MenuScreenState extends State<MenuScreen> {
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -11,22 +18,27 @@ class MenuScreen extends StatelessWidget {
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
-          label: 'Home',
+          label: 'Entrenamiento',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.business),
-          label: 'Business',
+          icon: Icon(Icons.model_training),
+          label: 'Administrar',
         ),
+        BottomNavigationBarItem(icon: Icon(Icons.bubble_chart), label: 'Tips'),
         BottomNavigationBarItem(
-          icon: Icon(Icons.school),
-          label: 'School',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: 'Settings',
+          icon: Icon(Icons.person),
+          label: 'Mi perfil',
         ),
       ],
-      onTap: onTap,
+      currentIndex: _selectedIndex,
+      onTap: (index) {
+        setState(() {
+          _selectedIndex = index;
+        });
+        widget.onTap(index);
+      },
+      selectedItemColor: Colors.black, // color of the selected item
+      unselectedItemColor: Colors.grey,
     );
   }
 }

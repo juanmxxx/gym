@@ -71,11 +71,11 @@ class _EntrenamientoScreenState extends State<EntrenamientoScreen> {
           case 1:
             Navigator.pushNamed(context, 'administrar');
             break;
-          case 2:
-            Navigator.pushNamed(context, 'ayuda');
-            break;
           case 3:
             Navigator.pushNamed(context, 'configuracion');
+            break;
+          case 2:
+            Navigator.pushNamed(context, 'tips');
             break;
         }
       }),

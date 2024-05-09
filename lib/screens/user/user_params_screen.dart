@@ -4,6 +4,7 @@ import 'package:gym/local/database/database.dart';
 
 class UsuarioParametrosScreen extends StatefulWidget {
   ParametrosPersonales parametrosUsuario;
+  late final DatabaseHelper db;
 
   UsuarioParametrosScreen({required this.parametrosUsuario});
 
@@ -17,6 +18,18 @@ class _UsuarioParametrosScreenState extends State<UsuarioParametrosScreen> {
 
   _UsuarioParametrosScreenState({required this.parametrosUsuario});
 
+  void initState() {
+    super.initState();
+    Future.microtask(() async {
+      await initializeDatabase();
+    });
+  }
+
+  Future<void> initializeDatabase() async {
+    widget.db =
+        await $FloorDatabaseHelper.databaseBuilder('database.db').build();
+  }
+
   @override
   Widget build(BuildContext context) {
     int peso = parametrosUsuario?.peso ?? 0;
@@ -28,42 +41,48 @@ class _UsuarioParametrosScreenState extends State<UsuarioParametrosScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Icon(Icons.person, size: 30),
-                  SizedBox(width: 20),
-                  Text(
-                    'Peso: $peso kg',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ],
+              ParamRow(
+                icon: Icons.monitor_weight,
+                title: 'Peso',
+                hintText: 'Enter new weight in kg',
+                value: parametrosUsuario.peso,
+                onUpdate: (newValue) async {
+                  parametrosUsuario.setPeso(newValue);
+                  await widget.db.parametrosPersonalesDao
+                      .updateParametros(parametrosUsuario);
+                  setState(() {});
+                },
               ),
-              SizedBox(height: 20),
-              Row(
-                children: <Widget>[
-                  Icon(Icons.height, size: 30),
-                  SizedBox(width: 20),
-                  Text(
-                    'Altura: ${parametrosUsuario?.altura} cm',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ],
+              SizedBox(height: 10),
+              ParamRow(
+                icon: Icons.height,
+                title: 'Altura',
+                hintText: 'Enter new altura in cm',
+                value: parametrosUsuario.altura,
+                onUpdate: (newValue) async {
+                  parametrosUsuario.setAltura(newValue);
+                  await widget.db.parametrosPersonalesDao
+                      .updateParametros(parametrosUsuario);
+                  setState(() {});
+                },
+              ),
+              SizedBox(height: 10),
+              ParamRow(
+                icon: Icons.timelapse,
+                title: 'Edad',
+                hintText: 'Enter new Edad',
+                value: parametrosUsuario.edad,
+                onUpdate: (newValue) async {
+                  parametrosUsuario.setEdad(newValue);
+                  await widget.db.parametrosPersonalesDao
+                      .updateParametros(parametrosUsuario);
+                  setState(() {});
+                },
               ),
               SizedBox(height: 10),
               Row(
                 children: <Widget>[
-                  Icon(Icons.height, size: 30),
-                  SizedBox(width: 20),
-                  Text(
-                    'Edad: ${parametrosUsuario?.edad}',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10),
-              Row(
-                children: <Widget>[
-                  Icon(Icons.height, size: 30),
+                  Icon(Icons.male, size: 30),
                   SizedBox(width: 20),
                   Text(
                     'Sexo: ${parametrosUsuario?.sexo == 1 ? 'Varón' : 'Hembra'}',
@@ -74,6 +93,63 @@ class _UsuarioParametrosScreenState extends State<UsuarioParametrosScreen> {
               SizedBox(height: 10),
             ],
           )),
+    );
+  }
+}
+
+class ParamRow extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String hintText;
+  final int value;
+  final Function(int) onUpdate;
+
+  ParamRow({
+    required this.icon,
+    required this.title,
+    required this.hintText,
+    required this.value,
+    required this.onUpdate,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Icon(icon, size: 30),
+        SizedBox(width: 20),
+        GestureDetector(
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                TextEditingController controller = TextEditingController();
+                return AlertDialog(
+                  title: Text(title),
+                  content: TextField(
+                    controller: controller,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(hintText: hintText),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text('Submit'),
+                      onPressed: () {
+                        onUpdate(int.parse(controller.text));
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+          child: Text(
+            '$title: $value',
+            style: TextStyle(fontSize: 20),
+          ),
+        ),
+      ],
     );
   }
 }
