@@ -134,7 +134,7 @@ class _$MedidasMuscularesDao extends MedidasMuscularesDao {
                   'torso': item.torso,
                   'gemelos': item.gemelos,
                   'antebrazo': item.antebrazo,
-                  'abs': item.abs,
+                  'abdominales': item.abdominales,
                   'gluteos': item.gluteos
                 }),
         _medidasMuscularesUpdateAdapter = UpdateAdapter(
@@ -149,7 +149,7 @@ class _$MedidasMuscularesDao extends MedidasMuscularesDao {
                   'torso': item.torso,
                   'gemelos': item.gemelos,
                   'antebrazo': item.antebrazo,
-                  'abs': item.abs,
+                  'abdominales': item.abdominales,
                   'gluteos': item.gluteos
                 }),
         _medidasMuscularesDeletionAdapter = DeletionAdapter(
@@ -164,7 +164,7 @@ class _$MedidasMuscularesDao extends MedidasMuscularesDao {
                   'torso': item.torso,
                   'gemelos': item.gemelos,
                   'antebrazo': item.antebrazo,
-                  'abs': item.abs,
+                  'abdominales': item.abdominales,
                   'gluteos': item.gluteos
                 });
 
@@ -191,7 +191,7 @@ class _$MedidasMuscularesDao extends MedidasMuscularesDao {
             torso: row['torso'] as double,
             gemelos: row['gemelos'] as double,
             antebrazo: row['antebrazo'] as double,
-            abs: row['abs'] as double,
+            abdominales: row['abdominales'] as double,
             gluteos: row['gluteos'] as double));
   }
 
@@ -207,7 +207,7 @@ class _$MedidasMuscularesDao extends MedidasMuscularesDao {
             torso: row['torso'] as double,
             gemelos: row['gemelos'] as double,
             antebrazo: row['antebrazo'] as double,
-            abs: row['abs'] as double,
+            abdominales: row['abdominales'] as double,
             gluteos: row['gluteos'] as double));
   }
 
@@ -328,6 +328,14 @@ class _$ParametrosPersonalesDao extends ParametrosPersonalesDao {
   Future<void> deleteParametros(ParametrosPersonales parametros) async {
     await _parametrosPersonalesDeletionAdapter.delete(parametros);
   }
+
+  @override
+  Future<int> getRowCount() async {
+    final result = await _queryAdapter.query(
+        'SELECT COUNT(*) FROM ParametrosPersonales',
+        mapper: (Map<String, Object?> row) => row['COUNT(*)'] as int?);
+    return result ?? 0;
+  }
 }
 
 class _$EjerciseDao extends EjercicioDao {
@@ -423,5 +431,12 @@ class _$EjerciseDao extends EjercicioDao {
   @override
   Future<void> deleteEjercicio(EjercicioLocal ejercicio) async {
     await _ejercicioDeletionAdapter.delete(ejercicio);
+  }
+
+  @override
+  Future<int> getRowCount() async {
+    final result = await _queryAdapter.query('SELECT COUNT(*) FROM Ejercicio',
+        mapper: (Map<String, Object?> row) => row['COUNT(*)'] as int?);
+    return result ?? 0;
   }
 }

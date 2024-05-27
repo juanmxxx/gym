@@ -31,8 +31,8 @@ class _ExercicesLocalScreenState extends State<ExercicesLocalScreen> {
                 width: double.infinity,
                 height: 200,
                 child: Stack(children: [
-                  _backgroundImage(url: ejercicio.imagen),
-                  _ProductDetails(nombre: ejercicio.nombre)
+                  _BackgroundImage(url: ejercicio.imagen),
+                  _EjerciseDetails(nombre: ejercicio.nombre)
                 ]),
               ),
             ),
@@ -42,10 +42,10 @@ class _ExercicesLocalScreenState extends State<ExercicesLocalScreen> {
   }
 }
 
-class _ProductDetails extends StatelessWidget {
+class _EjerciseDetails extends StatelessWidget {
   final String nombre;
 
-  const _ProductDetails({
+  const _EjerciseDetails({
     required this.nombre,
     Key? key,
   }) : super(key: key);
@@ -75,10 +75,10 @@ class _ProductDetails extends StatelessWidget {
   }
 }
 
-class _backgroundImage extends StatelessWidget {
+class _BackgroundImage extends StatelessWidget {
   final String? url;
 
-  const _backgroundImage({
+  const _BackgroundImage({
     Key? key,
     this.url,
   }) : super(key: key);
@@ -148,7 +148,7 @@ class _SelectParametersState extends State<SelectParameters> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text('Select number of series'),
+                        title: Text('Selecciona número de series'),
                         content: TextField(
                           controller: seriesController,
                           decoration: InputDecoration(
@@ -184,11 +184,11 @@ class _SelectParametersState extends State<SelectParameters> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text('Select repetitions'),
+                        title: Text('Selecciona número repeticiones'),
                         content: TextField(
                           controller: repetitionsController,
                           decoration: InputDecoration(
-                            labelText: 'Weight',
+                            labelText: 'Repeticiones',
                           ),
                           keyboardType: TextInputType.number,
                         ),
@@ -220,11 +220,11 @@ class _SelectParametersState extends State<SelectParameters> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text('Select Weight'),
+                        title: Text('Select peso (kg)'),
                         content: TextField(
                           controller: weightController,
                           decoration: InputDecoration(
-                            labelText: 'Weight',
+                            labelText: 'Peso',
                           ),
                           keyboardType: TextInputType.number,
                         ),

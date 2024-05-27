@@ -2,26 +2,35 @@ import 'package:flutter/material.dart';
 
 class MenuScreen extends StatefulWidget {
   final Function(int) onTap;
+  int index;
 
-  MenuScreen({required this.onTap});
+  MenuScreen({required this.onTap, required this.index});
 
   @override
-  _MenuScreenState createState() => _MenuScreenState();
+  _MenuScreenState createState() => _MenuScreenState(index: index);
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-  int _selectedIndex = 0;
+  int index;
+
+  _MenuScreenState({required this.index});
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      selectedItemColor: Theme.of(context).brightness == Brightness.dark
+          ? Colors.white
+          : Colors.black,
+      unselectedItemColor: Theme.of(context).brightness == Brightness.dark
+          ? Colors.grey
+          : Colors.grey,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
           label: 'Entrenamiento',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.model_training),
+          icon: Icon(Icons.sports),
           label: 'Administrar',
         ),
         BottomNavigationBarItem(icon: Icon(Icons.bubble_chart), label: 'Tips'),
@@ -30,15 +39,12 @@ class _MenuScreenState extends State<MenuScreen> {
           label: 'Mi perfil',
         ),
       ],
-      currentIndex: _selectedIndex,
       onTap: (index) {
         setState(() {
-          _selectedIndex = index;
+          widget.onTap(index);
         });
-        widget.onTap(index);
       },
-      selectedItemColor: Colors.black, // color of the selected item
-      unselectedItemColor: Colors.grey,
+      currentIndex: index,
     );
   }
 }

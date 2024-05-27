@@ -9,6 +9,9 @@ abstract class ParametrosPersonalesDao {
   @Query('SELECT * FROM ParametrosPersonales ORDER BY id ASC LIMIT 1')
   Future<ParametrosPersonales?> readFirst();
 
+  @Query('SELECT COUNT(*) FROM ParametrosPersonales')
+  Future<int> getRowCount();
+
   @insert
   Future<int> insertParametros(ParametrosPersonales parametros);
 

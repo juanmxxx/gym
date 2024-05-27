@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gym/main.dart';
 import 'package:gym/models/parametros_personales.dart';
 import 'package:gym/screens/menu_screen.dart';
 import 'package:gym/screens/user/user_params_screen.dart';
@@ -7,6 +8,7 @@ import 'package:gym/screens/user/TBM_calculator_screen.dart';
 import 'package:gym/local/database/database_helper.dart';
 import 'package:gym/screens/user/muscle_measure_screen.dart';
 import 'package:gym/models/medidas_musculares.dart';
+import 'package:adaptive_theme/adaptive_theme.dart';
 
 class UsuarioScreen extends StatefulWidget {
   const UsuarioScreen({Key? key}) : super(key: key);
@@ -48,7 +50,7 @@ class _UsuarioScreenState extends State<UsuarioScreen> {
         pecho: 0,
         gemelos: 0,
         gluteos: 0,
-        abs: 0,
+        abdominales: 0,
         torso: 0,
         antebrazo: 0);
 
@@ -136,22 +138,61 @@ class _UsuarioScreenState extends State<UsuarioScreen> {
                 ],
               ),
             ),
+            ElevatedButton(
+              onPressed: () {
+                final mode = AdaptiveTheme.of(context).mode;
+                if (mode == AdaptiveThemeMode.light) {
+                  AdaptiveTheme.of(context).setDark();
+                } else {
+                  AdaptiveTheme.of(context).setLight();
+                }
+              },
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.dark_mode, size: 30),
+                  SizedBox(width: 20),
+                  Text(
+                    'Dark Theme',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
-      bottomNavigationBar: MenuScreen(onTap: (index) {
-        switch (index) {
-          case 0:
-            Navigator.pushNamed(context, 'entrenamiento');
-            break;
-          case 1:
-            Navigator.pushNamed(context, 'administrar');
-            break;
-          case 2:
-            Navigator.pushNamed(context, 'tips');
-            break;
-        }
-      }),
+      bottomNavigationBar: MenuScreen(
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              Navigator.pushReplacementNamed(context, 'entrenamiento');
+              break;
+            case 1:
+              Navigator.pushReplacementNamed(context, 'administrar');
+              break;
+            case 2:
+              Navigator.pushReplacementNamed(context, 'tips');
+              break;
+          }
+        },
+        index: 3,
+      ),
+    );
+  }
+}
+
+class AdaptativeTheme extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return AdaptiveTheme(
+      light: ThemeData.light(useMaterial3: true),
+      dark: ThemeData.dark(useMaterial3: true),
+      initial: AdaptiveThemeMode.light,
+      builder: (theme, darkTheme) => MaterialApp(
+        theme: theme,
+        darkTheme: darkTheme,
+        home: UsuarioScreen(),
+      ),
     );
   }
 }

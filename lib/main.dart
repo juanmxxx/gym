@@ -1,40 +1,88 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/screens/administracion_screen.dart';
 import 'package:gym/screens/entrenamiento_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:gym/services/ejercicios_services.dart';
-import 'package:gym/screens/prueba.dart';
 import 'package:gym/screens/ejercicio_screen.dart';
 import 'package:gym/screens/login/main_screen.dart';
 import 'package:gym/screens/user_screen.dart';
 import 'package:gym/screens/tips_screen.dart';
+import 'package:gym/screens/ejercicio_screen_local.dart';
+import 'package:gym/local/database/database.dart';
+import '../../common/color_extension.dart';
+// to do leer primer registro personal, si hay empezar en entrenamiento, si no en configuracion
 
 void main() async {
+  runApp(MyApp());
+  //runApp(MyApp(db: db));
   runApp(AppState());
 }
 
-class MyApp extends StatelessWidget {
-  final db;
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
 
-  MyApp({this.db});
+class _MyAppState extends State<MyApp> {
+  DatabaseHelper? db;
+  bool isInitialized = false;
+
+  @override
+  void initState() {
+    super.initState();
+    initializeDatabase();
+  }
+
+  Future<void> initializeDatabase() async {
+    db = await $FloorDatabaseHelper.databaseBuilder('database.db').build();
+    if (await db?.parametrosPersonalesDao.getRowCount() != 0) {
+      setState(() {
+        isInitialized = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'LightWeight Gym',
-      //initialRoute: 'entrenamiento',
-      routes: {
-        'entrenamiento': (_) => EntrenamientoScreen(),
-        'administrar': (_) => AdministracionScreen(),
-        'prueba': (context) => PruebaEjerScreen(db: db),
-        'ejercicio': (context) => EjercicioScreen(),
-        'mainScreenLogin': (context) => MainLoginScreen(),
-        'configuracion': (context) => UsuarioScreen(),
-        'tips': (context) => TipsScreen(),
-      },
-      theme: ThemeData.light().copyWith(
-          scaffoldBackgroundColor: Colors.grey[200],
-          appBarTheme: AppBarTheme(elevation: 0, color: Colors.indigo)),
-      home: AdministracionScreen(),
+    return AdaptiveTheme(
+      light: ThemeData.light().copyWith(
+        scaffoldBackgroundColor: TColor.white,
+        appBarTheme: AppBarTheme(
+          elevation: 0,
+          color: TColor.primary,
+          titleTextStyle: TextStyle(
+              color: TColor.white, fontSize: 24, fontWeight: FontWeight.w700),
+        ),
+      ),
+      dark: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: Colors.grey[850],
+        appBarTheme: AppBarTheme(
+          elevation: 0,
+          color: TColor.primary,
+          titleTextStyle: TextStyle(
+              color: TColor.white, fontSize: 24, fontWeight: FontWeight.w700),
+        ),
+        textTheme: ThemeData.dark()
+            .textTheme
+            .apply(bodyColor: Colors.white, displayColor: Colors.white),
+      ),
+      initial: AdaptiveThemeMode.light,
+      builder: (theme, darkTheme) => MaterialApp(
+        title: 'Adaptive Theme Demo',
+        theme: theme,
+        routes: {
+          'entrenamiento': (_) => EntrenamientoScreen(),
+          'administrar': (_) => AdministracionScreen(),
+          'ejercicio': (context) => EjercicioScreen(),
+          'mainScreenLogin': (context) => MainLoginScreen(),
+          'configuracion': (context) => UsuarioScreen(),
+          'tips': (context) => TipsScreen(),
+        },
+        darkTheme: darkTheme,
+        home: isInitialized ? EntrenamientoScreen() : MainLoginScreen(),
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }

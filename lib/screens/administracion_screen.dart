@@ -12,7 +12,6 @@ class _AdministracionScreenState extends State<AdministracionScreen> {
   @override
   Widget build(BuildContext context) {
     final ejerciciosServices = Provider.of<EjerciciosServices>(context);
-    print("Cantidad de ejercicios: ${ejerciciosServices.ejercicios.length}");
     List<String> tipos =
         ejerciciosServices.ejercicios.map((e) => e.tipo).toSet().toList();
     return Scaffold(
@@ -50,16 +49,17 @@ class _AdministracionScreenState extends State<AdministracionScreen> {
         onTap: (index) {
           switch (index) {
             case 0:
-              Navigator.pushNamed(context, 'entrenamiento');
+              Navigator.pushReplacementNamed(context, 'entrenamiento');
               break;
             case 2:
-              Navigator.pushNamed(context, 'tips');
+              Navigator.pushReplacementNamed(context, 'tips');
               break;
             case 3:
-              Navigator.pushNamed(context, 'configuracion');
+              Navigator.pushReplacementNamed(context, 'configuracion');
               break;
           }
         },
+        index: 1,
       ),
     );
   }

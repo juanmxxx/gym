@@ -67,3 +67,18 @@ class SubmitToLocalParametros {
     await db.parametrosPersonalesDao.insertParametros(parametros);
   }
 }
+
+class InitDatabase {
+  late final DatabaseHelper db;
+
+  InitDatabase() {
+    WidgetsFlutterBinding.ensureInitialized();
+    Future.microtask(() async {
+      await initializeDatabase();
+    });
+  }
+
+  Future<void> initializeDatabase() async {
+    db = await $FloorDatabaseHelper.databaseBuilder('database.db').build();
+  }
+}

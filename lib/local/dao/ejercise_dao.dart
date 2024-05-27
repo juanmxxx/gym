@@ -6,6 +6,9 @@ abstract class EjercicioDao {
   @Query('SELECT * FROM Ejercicio')
   Future<List<EjercicioLocal>> readAll();
 
+  @Query('SELECT COUNT(*) FROM Ejercicio')
+  Future<int> getRowCount();
+
   @insert
   Future<int> insertEjercicio(EjercicioLocal ejercicio);
 

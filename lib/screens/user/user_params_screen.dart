@@ -44,7 +44,7 @@ class _UsuarioParametrosScreenState extends State<UsuarioParametrosScreen> {
               ParamRow(
                 icon: Icons.monitor_weight,
                 title: 'Peso',
-                hintText: 'Enter new weight in kg',
+                hintText: 'Introduce nuevo peso en kg',
                 value: parametrosUsuario.peso,
                 onUpdate: (newValue) async {
                   parametrosUsuario.setPeso(newValue);
@@ -57,7 +57,7 @@ class _UsuarioParametrosScreenState extends State<UsuarioParametrosScreen> {
               ParamRow(
                 icon: Icons.height,
                 title: 'Altura',
-                hintText: 'Enter new altura in cm',
+                hintText: 'Introduce nueva altura en cm',
                 value: parametrosUsuario.altura,
                 onUpdate: (newValue) async {
                   parametrosUsuario.setAltura(newValue);
@@ -70,7 +70,7 @@ class _UsuarioParametrosScreenState extends State<UsuarioParametrosScreen> {
               ParamRow(
                 icon: Icons.timelapse,
                 title: 'Edad',
-                hintText: 'Enter new Edad',
+                hintText: 'Introduce nueva edad',
                 value: parametrosUsuario.edad,
                 onUpdate: (newValue) async {
                   parametrosUsuario.setEdad(newValue);
@@ -133,7 +133,7 @@ class ParamRow extends StatelessWidget {
                   ),
                   actions: <Widget>[
                     TextButton(
-                      child: Text('Submit'),
+                      child: Text('Aceptar'),
                       onPressed: () {
                         onUpdate(int.parse(controller.text));
                         Navigator.pop(context);

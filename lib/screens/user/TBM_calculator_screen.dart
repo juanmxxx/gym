@@ -86,12 +86,12 @@ class _TBMCalculatorScreenState extends State<TBMCalculatorScreen> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: Text('What is TMB?'),
+                title: Text('¿Qué es la Tasa Metabólica Basal?'),
                 content: Text(
-                    'TMB, or Tasa Metabolica Basal, is...'), // Replace with your explanation
+                    'La Tasa Metabólica Basal (TMB) es la cantidad mínima de energía que nuestro cuerpo necesita para mantener funciones vitales básicas como respirar, procesos digestivos, control de la temperatura, entre otros. En otras palabras, es la medida del gasto energético de un organismo cuando está en reposo.'), // Replace with your explanation
                 actions: <Widget>[
                   TextButton(
-                    child: Text('Close'),
+                    child: Text('Cerrar'),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
@@ -128,7 +128,7 @@ class CardEjerciseFrequency extends StatelessWidget {
                 content: Text(recomendado.toString()), //Meter resultado
                 actions: <Widget>[
                   TextButton(
-                    child: Text('Close'),
+                    child: Text('Cerrar'),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },

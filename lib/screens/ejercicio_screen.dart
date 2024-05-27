@@ -28,14 +28,6 @@ class EjercicioScreen extends StatelessWidget {
       floatingActionButton: SubmitEjercise(),
     );
   }
-/* 
-  void setEjercicio(Ejercicio ejercicio) {
-    this.ejercicio = ejercicio;
-  }
-
-  Ejercicio getEjercicio() {
-    return ejercicio;
-  } */
 }
 
 class EjerciseImage extends StatelessWidget {
@@ -90,7 +82,7 @@ class ButtonsRow extends StatelessWidget {
             ),
           ),
           SizedBox(width: 10), // Add some space between the buttons
-          Text(nombre, style: TextStyle(fontSize: 25, color: Colors.black)),
+          Text(nombre, style: TextStyle(fontSize: 25)),
         ],
       ),
     );
@@ -113,7 +105,7 @@ class Description extends StatelessWidget {
             child: Text('Descripción', style: TextStyle(fontSize: 20))),
         Text(
           '\n$descripcion',
-          style: TextStyle(fontSize: 15, color: Colors.black),
+          style: TextStyle(fontSize: 15),
         ),
       ]),
     );
@@ -156,7 +148,7 @@ class _ExerciseFormState extends State<ExerciseForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text('Weight:'),
+          Text('Peso (kg):'),
           TextField(
             controller: peso,
             keyboardType: TextInputType.number,
@@ -166,12 +158,12 @@ class _ExerciseFormState extends State<ExerciseForm> {
             controller: series,
             keyboardType: TextInputType.number,
           ),
-          Text('Repetitions:'),
+          Text('Repeticiones:'),
           TextField(
             controller: repeticiones,
             keyboardType: TextInputType.number,
           ),
-          Text('Day of Week:'),
+          Text('Día:'),
           DropdownButton<String>(
             value: dropdownValue,
             onChanged: (String? newValue) {
@@ -182,7 +174,7 @@ class _ExerciseFormState extends State<ExerciseForm> {
             items: <String>[
               'Lunes',
               'Martes',
-              'Corcoles',
+              'Miercoles',
               'Jueves',
               'Viernes',
               'Sabado',
@@ -210,7 +202,7 @@ class _ExerciseFormState extends State<ExerciseForm> {
                   diaSemana: dropdownValue);
               Navigator.pop(context);
             },
-            child: Text('Submit'),
+            child: Text('Aceptar'),
           ),
         ],
       ),

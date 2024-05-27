@@ -48,6 +48,7 @@ class _MuscleMeasurementScreenState extends State<MuscleMeasureScreen> {
           ),
           MuscleCard(
             musculo: 'brazo',
+            medida: medidasMusculares.brazo,
             medidasMusculares: medidasMusculares,
             onUpdate: (newValue) async {
               medidasMusculares.setMusculo('brazo', newValue);
@@ -58,6 +59,7 @@ class _MuscleMeasurementScreenState extends State<MuscleMeasureScreen> {
           ),
           MuscleCard(
             musculo: 'pecho',
+            medida: medidasMusculares.pecho,
             medidasMusculares: medidasMusculares,
             onUpdate: (newValue) async {
               medidasMusculares.setMusculo('pecho', newValue);
@@ -68,6 +70,7 @@ class _MuscleMeasurementScreenState extends State<MuscleMeasureScreen> {
           ),
           MuscleCard(
             musculo: 'cintura',
+            medida: medidasMusculares.cintura,
             medidasMusculares: medidasMusculares,
             onUpdate: (newValue) async {
               medidasMusculares.setMusculo('cintura', newValue);
@@ -78,6 +81,7 @@ class _MuscleMeasurementScreenState extends State<MuscleMeasureScreen> {
           ),
           MuscleCard(
             musculo: 'torso',
+            medida: medidasMusculares.torso,
             medidasMusculares: medidasMusculares,
             onUpdate: (newValue) async {
               medidasMusculares.setMusculo('torso', newValue);
@@ -88,6 +92,7 @@ class _MuscleMeasurementScreenState extends State<MuscleMeasureScreen> {
           ),
           MuscleCard(
             musculo: 'gemelos',
+            medida: medidasMusculares.gemelos,
             medidasMusculares: medidasMusculares,
             onUpdate: (newValue) async {
               medidasMusculares.setMusculo('gemelos', newValue);
@@ -98,6 +103,7 @@ class _MuscleMeasurementScreenState extends State<MuscleMeasureScreen> {
           ),
           MuscleCard(
             musculo: 'antebrazo',
+            medida: medidasMusculares.antebrazo,
             medidasMusculares: medidasMusculares,
             onUpdate: (newValue) async {
               medidasMusculares.setMusculo('antebrazo', newValue);
@@ -107,10 +113,11 @@ class _MuscleMeasurementScreenState extends State<MuscleMeasureScreen> {
             },
           ),
           MuscleCard(
-            musculo: 'abs',
+            musculo: 'abdominales',
+            medida: medidasMusculares.abdominales,
             medidasMusculares: medidasMusculares,
             onUpdate: (newValue) async {
-              medidasMusculares.setMusculo('abs', newValue);
+              medidasMusculares.setMusculo('abdominales', newValue);
               await widget.db.medidasMuscularesDao
                   .updateMedidas(medidasMusculares);
               setState(() {});
@@ -119,6 +126,7 @@ class _MuscleMeasurementScreenState extends State<MuscleMeasureScreen> {
           MuscleCard(
             musculo: 'gluteos',
             medidasMusculares: medidasMusculares,
+            medida: medidasMusculares.gluteos,
             onUpdate: (newValue) async {
               medidasMusculares.setMusculo('gluteos', newValue);
               await widget.db.medidasMuscularesDao
@@ -138,11 +146,13 @@ class MuscleCard extends StatelessWidget {
   final String musculo;
   final MedidasMusculares medidasMusculares;
   final Function(double) onUpdate;
+  double medida;
 
   MuscleCard({
     required this.musculo,
     required this.medidasMusculares,
     required this.onUpdate,
+    required this.medida,
   });
 
   @override
@@ -179,7 +189,7 @@ class MuscleCard extends StatelessWidget {
           );
         },
         child: ListTile(
-          title: Text('musculo: $musculo cm'),
+          title: Text('$musculo: $medida cm'),
         ),
       ),
     );

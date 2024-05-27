@@ -10,7 +10,7 @@ class MedidasMusculares {
   double torso;
   double gemelos;
   double antebrazo;
-  double abs;
+  double abdominales;
   double gluteos;
 
   MedidasMusculares(
@@ -21,7 +21,7 @@ class MedidasMusculares {
       required this.torso,
       required this.gemelos,
       required this.antebrazo,
-      required this.abs,
+      required this.abdominales,
       required this.gluteos});
 
   void setBrazo(double brazo) {
@@ -49,7 +49,7 @@ class MedidasMusculares {
   }
 
   void setAbs(double abs) {
-    this.abs = abs;
+    this.abdominales = abs;
   }
 
   void setGluteos(double gluteos) {
@@ -76,7 +76,7 @@ class MedidasMusculares {
       case 'antebrazo':
         setAntebrazo(medida);
         break;
-      case 'abs':
+      case 'abdominales':
         setAbs(medida);
         break;
       case 'gluteos':
