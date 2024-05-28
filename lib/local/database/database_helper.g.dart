@@ -345,7 +345,6 @@ class _$EjerciseDao extends EjercicioDao {
             database,
             'Ejercicio',
             (EjercicioLocal item) => <String, Object?>{
-                  'id': item.id,
                   'name': item.nombre,
                   'description': item.descripcion,
                   'image': item.imagen,
@@ -405,7 +404,7 @@ class _$EjerciseDao extends EjercicioDao {
   Future<List<EjercicioLocal>> readAll() async {
     return _queryAdapter.queryList('SELECT * FROM Ejercicio',
         mapper: (Map<String, Object?> row) => EjercicioLocal(
-            id: row['id'] as int?,
+            id: row['id'] as int,
             nombre: row['name'] as String,
             descripcion: row['description'] as String,
             imagen: row['image'] as String,
@@ -431,6 +430,14 @@ class _$EjerciseDao extends EjercicioDao {
   @override
   Future<void> deleteEjercicio(EjercicioLocal ejercicio) async {
     await _ejercicioDeletionAdapter.delete(ejercicio);
+  }
+
+  @override
+  Future<void> deleteEjercicioById(int id) async {
+    await _queryAdapter.queryNoReturn(
+      'DELETE FROM Ejercicio WHERE id = ?',
+      arguments: [id],
+    );
   }
 
   @override

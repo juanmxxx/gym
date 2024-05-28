@@ -200,7 +200,7 @@ class _ExerciseFormState extends State<ExerciseForm> {
                   series: int.parse(series.text),
                   peso: int.parse(peso.text),
                   diaSemana: dropdownValue);
-              Navigator.pop(context);
+              Navigator.pushReplacementNamed(context, 'administrar');
             },
             child: Text('Aceptar'),
           ),

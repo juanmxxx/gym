@@ -17,4 +17,7 @@ abstract class EjercicioDao {
 
   @delete
   Future<void> deleteEjercicio(EjercicioLocal ejercicio);
+
+  @Query('DELETE FROM Ejercicio WHERE id = :id')
+  Future<void> deleteEjercicioById(int id);
 }

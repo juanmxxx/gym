@@ -16,6 +16,7 @@ class TipsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Tips'),
+        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: Center(

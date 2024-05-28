@@ -4,6 +4,7 @@ import 'package:floor/floor.dart';
 class EjercicioLocal {
   @PrimaryKey(autoGenerate: true)
   final int? id;
+
   final String nombre;
   final String descripcion;
   final String imagen;

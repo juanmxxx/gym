@@ -73,202 +73,199 @@ class _Step2ViewState extends State<Step2View> {
     }
 
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: TColor.white,
-          centerTitle: true,
-          leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Image.asset(
-                "assets/back.png",
-                width: 25,
-                height: 25,
-              )),
-          title: Text(
-            "Paso 2 de 2",
-            style: TextStyle(
-                color: TColor.primary,
-                fontSize: 20,
-                fontWeight: FontWeight.w700),
-          ),
+      appBar: AppBar(
+        backgroundColor: TColor.white,
+        centerTitle: true,
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Image.asset(
+              "assets/back.png",
+              width: 25,
+              height: 25,
+            )),
+        title: Text(
+          "Paso 2 de 2",
+          style: TextStyle(
+              color: TColor.primary, fontSize: 20, fontWeight: FontWeight.w700),
         ),
-        body: SafeArea(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: Text(
-                  "Detalles personales",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: TColor.secondaryText,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700),
-                ),
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Text(
+                "Detalles personales",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: TColor.secondaryText,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Text(
-                  "Estos detalles seran importantes para poder personalizar su dieta y tener un mejor control de su progreso",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: TColor.secondaryText, fontSize: 16),
-                ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Text(
+                "Estos detalles seran importantes para poder personalizar su dieta y tener un mejor control de su progreso",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: TColor.secondaryText, fontSize: 16),
               ),
-              SizedBox(
-                height: media.width * 0.05,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Column(
-                  children: [
-                    SizedBox(height: media.width * 0.05),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Row(
-                          children: [
-                            Text(
-                              'Peso o masa corporal:',
-                              style: TextStyle(
-                                  color: TColor.secondaryText,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            SizedBox(
-                                width:
-                                    10), // Add some space between the Text and TextField
-                            Expanded(
-                              child: TextField(
-                                  keyboardType: TextInputType.number,
-                                  controller: pesoCorporal,
-                                  decoration: InputDecoration(
-                                      border: InputBorder.none)),
-                            ),
-                          ],
-                        ),
-                        Divider(color: TColor.divider, height: 1),
-                        Row(
-                          children: [
-                            Text(
-                              'Altura:',
-                              style: TextStyle(
-                                  color: TColor.secondaryText,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            SizedBox(width: 10),
-                            Expanded(
-                              child: TextField(
-                                  keyboardType: TextInputType.number,
-                                  controller: altura,
-                                  decoration: InputDecoration(
-                                      border: InputBorder.none)),
-                            ),
-                          ],
-                        ),
-                        Divider(color: TColor.divider, height: 1),
-                        Row(
-                          children: [
-                            Text(
-                              'Edad:',
-                              style: TextStyle(
-                                  color: TColor.secondaryText,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            SizedBox(width: 10),
-                            Expanded(
-                              child: TextField(
-                                  keyboardType: TextInputType.number,
-                                  controller: edad,
-                                  decoration: InputDecoration(
-                                      border: InputBorder.none)),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Divider(color: TColor.divider, height: 1),
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: media.width * 0.05),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            ),
+            SizedBox(
+              height: media.width * 0.04,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Column(
+                children: [
+                  SizedBox(height: media.width * 0.05),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
                         children: [
                           Text(
-                            "Sexo",
+                            'Peso o masa corporal:',
                             style: TextStyle(
                                 color: TColor.secondaryText,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w700),
                           ),
-                          CupertinoSegmentedControl(
-                            groupValue: isMale,
-                            selectedColor: TColor.primary,
-                            unselectedColor: TColor.white,
-                            borderColor: TColor.primary,
-                            children: const {
-                              true: Text(" Varón ",
-                                  style: TextStyle(fontSize: 18)),
-                              false: Text(" Hembra ",
-                                  style: TextStyle(fontSize: 18))
-                            },
-                            onValueChanged: (isMaleVal) {
-                              setState(() {
-                                isMale = isMaleVal;
-                                updateParameters();
-                                asignado = true;
-                              });
-                            },
-                            padding: EdgeInsets.zero,
-                          )
+                          SizedBox(
+                              width:
+                                  10), // Add some space between the Text and TextField
+                          Expanded(
+                            child: TextField(
+                                keyboardType: TextInputType.number,
+                                controller: pesoCorporal,
+                                decoration:
+                                    InputDecoration(border: InputBorder.none)),
+                          ),
                         ],
                       ),
+                      Divider(color: TColor.divider, height: 1),
+                      Row(
+                        children: [
+                          Text(
+                            'Altura:',
+                            style: TextStyle(
+                                color: TColor.secondaryText,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700),
+                          ),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: TextField(
+                                keyboardType: TextInputType.number,
+                                controller: altura,
+                                decoration:
+                                    InputDecoration(border: InputBorder.none)),
+                          ),
+                        ],
+                      ),
+                      Divider(color: TColor.divider, height: 1),
+                      Row(
+                        children: [
+                          Text(
+                            'Edad:',
+                            style: TextStyle(
+                                color: TColor.secondaryText,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700),
+                          ),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: TextField(
+                                keyboardType: TextInputType.number,
+                                controller: edad,
+                                decoration:
+                                    InputDecoration(border: InputBorder.none)),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Divider(color: TColor.divider, height: 1),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: media.width * 0.05),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Sexo",
+                          style: TextStyle(
+                              color: TColor.secondaryText,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700),
+                        ),
+                        CupertinoSegmentedControl(
+                          groupValue: isMale,
+                          selectedColor: TColor.primary,
+                          unselectedColor: TColor.white,
+                          borderColor: TColor.primary,
+                          children: const {
+                            true:
+                                Text(" Varón ", style: TextStyle(fontSize: 18)),
+                            false:
+                                Text(" Hembra ", style: TextStyle(fontSize: 18))
+                          },
+                          onValueChanged: (isMaleVal) {
+                            setState(() {
+                              isMale = isMaleVal;
+                              updateParameters();
+                              asignado = true;
+                            });
+                          },
+                          padding: EdgeInsets.zero,
+                        )
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              const Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [1, 2].map((pObj) {
-                  return Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    width: 12,
-                    height: 12,
-                    decoration: BoxDecoration(
-                        color: 2 == pObj
-                            ? TColor.primary
-                            : TColor.gray.withOpacity(0.7),
-                        borderRadius: BorderRadius.circular(6)),
-                  );
-                }).toList(),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 30, horizontal: 25),
-                child: RoundButton(
-                  title: "Comenzemos!",
-                  onPressed: () {
-                    ParametrosPersonales parametrosPersonales =
-                        ParametrosPersonales(
-                            peso: int.parse(pesoCorporal.text),
-                            altura: int.parse(altura.text),
-                            edad: int.parse(edad.text),
-                            sexo: isMale ? 1 : 0);
+            ),
+            const Spacer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [1, 2].map((pObj) {
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
+                  width: 12,
+                  height: 12,
+                  decoration: BoxDecoration(
+                      color: 2 == pObj
+                          ? TColor.primary
+                          : TColor.gray.withOpacity(0.7),
+                      borderRadius: BorderRadius.circular(6)),
+                );
+              }).toList(),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 25),
+              child: RoundButton(
+                title: "Comenzemos!",
+                onPressed: () {
+                  ParametrosPersonales parametrosPersonales =
+                      ParametrosPersonales(
+                          peso: int.parse(pesoCorporal.text),
+                          altura: int.parse(altura.text),
+                          edad: int.parse(edad.text),
+                          sexo: isMale ? 1 : 0);
 
-                    SubmitToLocalParametros(parametros: parametrosPersonales);
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => EntrenamientoScreen()),
-                        (route) => false);
-                  },
-                ),
+                  SubmitToLocalParametros(parametros: parametrosPersonales);
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EntrenamientoScreen()),
+                      (route) => false);
+                },
               ),
-            ],
-          ),
-        ));
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

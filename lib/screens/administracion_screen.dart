@@ -17,6 +17,7 @@ class _AdministracionScreenState extends State<AdministracionScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Ejercicios'),
+        automaticallyImplyLeading: false,
       ),
       body: ListView.builder(
         itemCount: tipos.length,

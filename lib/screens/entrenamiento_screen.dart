@@ -41,52 +41,82 @@ class _EntrenamientoScreenState extends State<EntrenamientoScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Entrenamiento'),
+        automaticallyImplyLeading: false,
       ),
-      body: ListView.builder(
-          itemCount: diasSemana.length,
-          itemBuilder: (BuildContext context, int index) {
-            final diaSemana = diasSemana[index];
-            final ejerciciosDia =
-                ejercicios.where((e) => e.dayOfWeek == diaSemana).toList();
-
-            if (ejercicios.isEmpty) {
-              print("No hay ejercicios");
-              return Center(child: Text('No exercises here'));
-            } else {
-              print(" hay ejercicios");
-              return Column(
+      body: ejercicios.isEmpty
+          ? Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Card(
-                    child: ExpansionTile(
-                      title: Text(diaSemana),
-                      children: List.generate(
-                          ejerciciosDia.length,
-                          (index) => GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          EjercicioScreenLocal(
-                                        nombrEjercicio:
-                                            ejerciciosDia[index].nombre,
-                                        gifAyuda: ejerciciosDia[index].gifAyuda,
-                                        descripcion:
-                                            ejerciciosDia[index].descripcion,
-                                      ),
-                                    ),
-                                  );
+                  Text('No hay ejercicios registrados, empieza añadiendo!'),
+                  IconButton(
+                    icon: Icon(Icons.info),
+                    onPressed: () {
+                      // Handle the button press here
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Procedimiento'),
+                            content: Text(
+                                'Para añadir un ejercicio, ve a la pantalla de administracion.\n\n Luego abre el desplegable sobre el musculo a entrenar y selecciona un ejercicio, pulsa el icono "+" rellena los parametros y añade!'),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text('Close'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
                                 },
-                                child: ExercicesLocalScreen(
-                                  ejercicio: ejerciciosDia[index],
-                                ),
-                              )),
-                    ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
                   ),
                 ],
-              );
-            }
-          }),
+              ),
+            )
+          : ListView.builder(
+              itemCount: diasSemana.length,
+              itemBuilder: (BuildContext context, int index) {
+                final diaSemana = diasSemana[index];
+                final ejerciciosDia =
+                    ejercicios.where((e) => e.dayOfWeek == diaSemana).toList();
+
+                return Column(
+                  children: [
+                    Card(
+                      child: ExpansionTile(
+                        title: Text(diaSemana),
+                        children: List.generate(
+                            ejerciciosDia.length,
+                            (index) => GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            EjercicioScreenLocal(
+                                          nombrEjercicio:
+                                              ejerciciosDia[index].nombre,
+                                          gifAyuda:
+                                              ejerciciosDia[index].gifAyuda,
+                                          descripcion:
+                                              ejerciciosDia[index].descripcion,
+                                          id: ejerciciosDia[index].id ?? 0,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: ExercicesLocalScreen(
+                                    ejercicio: ejerciciosDia[index],
+                                  ),
+                                )),
+                      ),
+                    ),
+                  ],
+                );
+              }),
       bottomNavigationBar: MenuScreen(
           onTap: (index) {
             switch (index) {

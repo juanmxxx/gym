@@ -62,6 +62,7 @@ class _UsuarioScreenState extends State<UsuarioScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Ajustes'),
+        automaticallyImplyLeading: false,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
