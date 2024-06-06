@@ -23,6 +23,7 @@ class CreatineTipsScreen extends StatelessWidget {
                   width: double.infinity,
                   height: 350,
                   decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
                       image: AssetImage('assets/tips/creatine_portrait.jpg'),
                       fit: BoxFit.fill,

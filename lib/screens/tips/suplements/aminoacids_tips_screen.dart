@@ -23,6 +23,7 @@ class AminoacidsTipsScreen extends StatelessWidget {
                   width: double.infinity,
                   height: 200,
                   decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
                       image: AssetImage(
                           'assets/tips/aminoacidos_portrait_tips.jpg'),

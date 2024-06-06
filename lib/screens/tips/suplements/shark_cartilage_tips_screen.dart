@@ -23,6 +23,7 @@ class SharkCartilageTipsScreen extends StatelessWidget {
                   width: double.infinity,
                   height: 350,
                   decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
                       image: AssetImage(
                           'assets/tips/shark_cartilage_portrait_tips.jpg'),

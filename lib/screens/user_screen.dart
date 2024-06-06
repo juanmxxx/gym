@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gym/main.dart';
 import 'package:gym/models/parametros_personales.dart';
 import 'package:gym/screens/menu_screen.dart';
@@ -9,6 +10,7 @@ import 'package:gym/local/database/database_helper.dart';
 import 'package:gym/screens/user/muscle_measure_screen.dart';
 import 'package:gym/models/medidas_musculares.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:gym/screens/user/privacy_screen.dart';
 
 class UsuarioScreen extends StatefulWidget {
   const UsuarioScreen({Key? key}) : super(key: key);
@@ -66,31 +68,79 @@ class _UsuarioScreenState extends State<UsuarioScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: <Widget>[
-            GestureDetector(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => UsuarioParametrosScreen(
-                      parametrosUsuario: parametrosUsuario!),
-                ),
-              ),
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.person, size: 30),
-                  SizedBox(width: 20),
-                  Text(
-                    'Usuario',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ],
+        child: Column(children: <Widget>[
+          SizedBox(height: 5),
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => UsuarioParametrosScreen(
+                    parametrosUsuario: parametrosUsuario!),
               ),
             ),
-            SizedBox(height: 10),
-            Row(
+            child: Row(
               children: <Widget>[
-                Icon(Icons.lock, size: 30),
+                Icon(Icons.person, size: 30),
+                SizedBox(width: 20),
+                Text(
+                  'Usuario',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 10),
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MuscleMeasureScreen(
+                  medidasMusculares: medidasMusculares!,
+                ),
+              ),
+            ),
+            child: Row(
+              children: <Widget>[
+                Icon(Icons.format_size, size: 30),
+                SizedBox(width: 20),
+                Text(
+                  'Medidas musculares',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 10),
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    TBMCalculatorScreen(parametrosUsuario: parametrosUsuario!),
+              ),
+            ),
+            child: Row(
+              children: <Widget>[
+                Icon(Icons.calculate, size: 30),
+                SizedBox(width: 20),
+                Text(
+                  'Calculadora TMB (Basal)',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 40),
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PrivacyScreen(),
+              ),
+            ),
+            child: Row(
+              children: <Widget>[
+                Icon(Icons.privacy_tip, size: 30),
                 SizedBox(width: 20),
                 Text(
                   'Privacidad',
@@ -98,69 +148,10 @@ class _UsuarioScreenState extends State<UsuarioScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 10),
-            GestureDetector(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => TBMCalculatorScreen(
-                      parametrosUsuario: parametrosUsuario!),
-                ),
-              ),
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.calculate, size: 30),
-                  SizedBox(width: 20),
-                  Text(
-                    'Calculadora TMB (Basal)',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 10),
-            GestureDetector(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MuscleMeasureScreen(
-                    medidasMusculares: medidasMusculares!,
-                  ),
-                ),
-              ),
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.center_focus_strong, size: 30),
-                  SizedBox(width: 20),
-                  Text(
-                    'Medidas musculares',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ],
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                final mode = AdaptiveTheme.of(context).mode;
-                if (mode == AdaptiveThemeMode.light) {
-                  AdaptiveTheme.of(context).setDark();
-                } else {
-                  AdaptiveTheme.of(context).setLight();
-                }
-              },
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.dark_mode, size: 30),
-                  SizedBox(width: 20),
-                  Text(
-                    'Dark Theme',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+          SizedBox(height: 10),
+          ThemeModeWidget(),
+        ]),
       ),
       bottomNavigationBar: MenuScreen(
         onTap: (index) {
@@ -193,6 +184,82 @@ class AdaptativeTheme extends StatelessWidget {
         theme: theme,
         darkTheme: darkTheme,
         home: UsuarioScreen(),
+      ),
+    );
+  }
+}
+
+class ThemeModeWidget extends StatefulWidget {
+  @override
+  _ThemeModeWidgetState createState() => _ThemeModeWidgetState();
+}
+
+class _ThemeModeWidgetState extends State<ThemeModeWidget> {
+  int _selectedTheme = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Temas'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  RadioListTile<int>(
+                    title: Text('Claro'),
+                    value: 0,
+                    groupValue: _selectedTheme,
+                    onChanged: (int? value) {
+                      setState(() {
+                        _selectedTheme = value ?? 0;
+                        AdaptiveTheme.of(context).setLight();
+                      });
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  RadioListTile<int>(
+                    title: Text('Oscuro'),
+                    value: 1,
+                    groupValue: _selectedTheme,
+                    onChanged: (int? value) {
+                      setState(() {
+                        _selectedTheme = value ?? 0;
+                        AdaptiveTheme.of(context).setDark();
+                      });
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  RadioListTile<int>(
+                    title: Text('Predeterminado del sistema'),
+                    value: 2,
+                    groupValue: _selectedTheme,
+                    onChanged: (int? value) {
+                      setState(() {
+                        _selectedTheme = value ?? 0;
+                        AdaptiveTheme.of(context).toggleThemeMode();
+                      });
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+      child: Row(
+        children: <Widget>[
+          Icon(Icons.dark_mode, size: 30),
+          SizedBox(width: 20),
+          Text(
+            'Tema del sistema',
+            style: TextStyle(fontSize: 20),
+          ),
+        ],
       ),
     );
   }

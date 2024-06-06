@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -9,6 +11,7 @@ import 'package:gym/screens/tips/trainings/strenght_training_tips_screen.dart';
 import 'package:gym/screens/tips/trainings/resistance_training_tips_screen.dart';
 import 'package:gym/screens/tips/trainings/flexibility_training_tips_screen.dart';
 import 'package:gym/screens/tips/suplements/aminoacids_tips_screen.dart';
+import 'package:gym/screens/tips/general_tips_screen.dart';
 
 class TipsScreen extends StatelessWidget {
   @override
@@ -73,33 +76,58 @@ class TipsGeneralScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0),
-      ),
-      child: Container(
-        width: double.infinity,
-        height: 170,
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15.0),
-                child: FadeInImage(
-                  placeholder: AssetImage('assets/gym.gif'),
-                  image: AssetImage('assets/tips/general_tips_portrait.jpg'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('Tips generales',
-                  style: TextStyle(fontSize: 20, color: Colors.white)),
-            ),
-          ],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
         ),
-      ),
-    );
+        child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => GeneralTipsScreen()),
+              );
+            },
+            child: Container(
+              width: double.infinity,
+              height: 170,
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15.0),
+                      child: FadeInImage(
+                        placeholder: AssetImage('assets/gym.gif'),
+                        image:
+                            AssetImage('assets/tips/general_tips_portrait.jpg'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  Positioned.fill(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15.0),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+                        child: Container(
+                          color: Colors.black.withOpacity(0.4),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 8.0,
+                    top: 0,
+                    bottom: 0,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Tips generales',
+                        style: TextStyle(fontSize: 20, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )));
   }
 }
 

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:gym/models/ejercicio_local.dart';
+import 'package:gym/models/parametros_personales.dart';
 import 'package:gym/screens/ejercicio_screen_local.dart';
 import 'package:gym/screens/screens.dart';
 import 'package:gym/local/database/database.dart';
@@ -15,6 +16,7 @@ class EntrenamientoScreen extends StatefulWidget {
 class _EntrenamientoScreenState extends State<EntrenamientoScreen> {
   List<EjercicioLocal> ejercicios = [];
   late final DatabaseHelper db;
+  late ParametrosPersonales? parametrosUsuario;
 
   @override
   void initState() {
@@ -31,6 +33,7 @@ class _EntrenamientoScreenState extends State<EntrenamientoScreen> {
 
   Future<void> initializeDatabase() async {
     db = await $FloorDatabaseHelper.databaseBuilder('database.db').build();
+    parametrosUsuario = await db.parametrosPersonalesDao.readFirst();
   }
 
   @override
@@ -40,7 +43,7 @@ class _EntrenamientoScreenState extends State<EntrenamientoScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Entrenamiento'),
+        title: Text('Bienvenido ${parametrosUsuario?.nombre}'),
         automaticallyImplyLeading: false,
       ),
       body: ejercicios.isEmpty
@@ -62,7 +65,7 @@ class _EntrenamientoScreenState extends State<EntrenamientoScreen> {
                                 'Para añadir un ejercicio, ve a la pantalla de administracion.\n\n Luego abre el desplegable sobre el musculo a entrenar y selecciona un ejercicio, pulsa el icono "+" rellena los parametros y añade!'),
                             actions: <Widget>[
                               TextButton(
-                                child: Text('Close'),
+                                child: Text('Ok'),
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },

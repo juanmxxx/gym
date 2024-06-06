@@ -8,10 +8,12 @@ import 'package:gym/services/submit_to_local.dart';
 import 'package:gym/models/parametros_personales.dart';
 
 class Step2View extends StatefulWidget {
-  const Step2View({super.key});
+  final String nombre;
+
+  const Step2View({required this.nombre});
 
   @override
-  State<Step2View> createState() => _Step2ViewState();
+  State<Step2View> createState() => _Step2ViewState(nombre: nombre);
 }
 
 class _Step2ViewState extends State<Step2View> {
@@ -20,6 +22,9 @@ class _Step2ViewState extends State<Step2View> {
   int? selectAge;
   bool isMale = true;
   bool asignado = false;
+  String nombre;
+
+  _Step2ViewState({required this.nombre});
 
   @override
   Widget build(BuildContext context) {
@@ -249,8 +254,9 @@ class _Step2ViewState extends State<Step2View> {
                 onPressed: () {
                   ParametrosPersonales parametrosPersonales =
                       ParametrosPersonales(
-                          peso: int.parse(pesoCorporal.text),
-                          altura: int.parse(altura.text),
+                          nombre: nombre,
+                          peso: double.parse(pesoCorporal.text),
+                          altura: double.parse(altura.text),
                           edad: int.parse(edad.text),
                           sexo: isMale ? 1 : 0);
 

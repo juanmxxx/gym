@@ -12,6 +12,7 @@ class Step1View extends StatefulWidget {
 }
 
 class _Step1ViewState extends State<Step1View> {
+  TextEditingController nombre = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.sizeOf(context);
@@ -48,13 +49,40 @@ class _Step1ViewState extends State<Step1View> {
                       fontWeight: FontWeight.w700),
                 ),
               ),
-              Text(
-                "El agua es esencial durante el entrenamiento, al igual que llevar ropa comoda y buen calzado\n pero no menos importante un control sobre tu entrenamiento. \n\n!A partir de ahora ya podras tenerlo todo!",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: TColor.secondaryText,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w300),
+              Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Text(
+                  "El agua es esencial durante el entrenamiento, al igual que llevar ropa comoda y buen calzado\n pero no menos importante un control sobre tu entrenamiento. \n\n!A partir de ahora ya podras tenerlo todo!",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: TColor.secondaryText,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Text(
+                      'Primero dinos tu nombre: ',
+                      style: TextStyle(
+                          color: TColor.secondaryText,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700),
+                    ),
+                    SizedBox(
+                        width:
+                            10), // Add some space between the Text and TextField
+                    Expanded(
+                      child: TextField(
+                          keyboardType: TextInputType.number,
+                          controller: nombre,
+                          decoration:
+                              InputDecoration(border: InputBorder.none)),
+                    ),
+                  ],
+                ),
               ),
               const Spacer(),
               Row(
@@ -78,13 +106,40 @@ class _Step1ViewState extends State<Step1View> {
                 child: RoundButton(
                   title: "Siguiente",
                   onPressed: () {
-                    Navigator.push(
+                    RegExp regExp = new RegExp(r'^[^0-9]+$');
+                    if (nombre.text.length > 3 &&
+                        nombre.text.length < 16 &&
+                        regExp.hasMatch(nombre.text)) {
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Step2View()));
+                            builder: (context) => Step2View(
+                                  nombre: nombre.text,
+                                )),
+                      );
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Error'),
+                            content: Text(
+                                'El nombre debe tener entre 4 y 15 caracteres. No se permiten números.'),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text('OK'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
                   },
                 ),
-              ),
+              )
             ],
           ),
         ));

@@ -4,21 +4,23 @@ import 'package:floor/floor.dart';
 class ParametrosPersonales {
   @PrimaryKey(autoGenerate: true)
   int? id;
-  int peso;
+  String nombre;
+  double peso;
   int edad;
-  int altura;
-  int sexo;
+  double altura;
+  double sexo;
   int? idMedidasMusculares;
 
   ParametrosPersonales(
       {this.id,
+      required this.nombre,
       required this.peso,
       required this.edad,
       required this.altura,
       required this.sexo,
       this.idMedidasMusculares});
 
-  void setPeso(int peso) {
+  void setPeso(double peso) {
     this.peso = peso;
   }
 
@@ -26,11 +28,15 @@ class ParametrosPersonales {
     this.edad = edad;
   }
 
-  void setAltura(int altura) {
+  void setAltura(double altura) {
     this.altura = altura;
   }
 
-  void setSexo(int sexo) {
+  void setSexo(double sexo) {
     this.sexo = sexo;
+  }
+
+  void setName(String nombre) {
+    this.nombre = nombre;
   }
 }

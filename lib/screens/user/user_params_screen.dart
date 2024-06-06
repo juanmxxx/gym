@@ -1,3 +1,4 @@
+import 'package:floor/floor.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/models/parametros_personales.dart';
 import 'package:gym/local/database/database.dart';
@@ -32,7 +33,7 @@ class _UsuarioParametrosScreenState extends State<UsuarioParametrosScreen> {
 
   @override
   Widget build(BuildContext context) {
-    int peso = parametrosUsuario?.peso ?? 0;
+    double peso = parametrosUsuario?.peso ?? 0;
     return Scaffold(
       appBar: AppBar(
         title: Text('Parametros generales'),
@@ -46,8 +47,10 @@ class _UsuarioParametrosScreenState extends State<UsuarioParametrosScreen> {
                 title: 'Peso',
                 hintText: 'Introduce nuevo peso en kg',
                 value: parametrosUsuario.peso,
+                lastWeightUpdate: DateTime.now(),
                 onUpdate: (newValue) async {
                   parametrosUsuario.setPeso(newValue);
+
                   await widget.db.parametrosPersonalesDao
                       .updateParametros(parametrosUsuario);
                   setState(() {});
@@ -59,6 +62,7 @@ class _UsuarioParametrosScreenState extends State<UsuarioParametrosScreen> {
                 title: 'Altura',
                 hintText: 'Introduce nueva altura en cm',
                 value: parametrosUsuario.altura,
+                lastHeightUpdate: DateTime.now(),
                 onUpdate: (newValue) async {
                   parametrosUsuario.setAltura(newValue);
                   await widget.db.parametrosPersonalesDao
@@ -71,9 +75,10 @@ class _UsuarioParametrosScreenState extends State<UsuarioParametrosScreen> {
                 icon: Icons.timelapse,
                 title: 'Edad',
                 hintText: 'Introduce nueva edad',
-                value: parametrosUsuario.edad,
+                value: parametrosUsuario.edad.toDouble(),
+                lastAgeUpdate: DateTime.now(),
                 onUpdate: (newValue) async {
-                  parametrosUsuario.setEdad(newValue);
+                  parametrosUsuario.setEdad(newValue.toInt());
                   await widget.db.parametrosPersonalesDao
                       .updateParametros(parametrosUsuario);
                   setState(() {});
@@ -101,8 +106,11 @@ class ParamRow extends StatelessWidget {
   final IconData icon;
   final String title;
   final String hintText;
-  final int value;
-  final Function(int) onUpdate;
+  final double value;
+  final Function(double) onUpdate;
+  DateTime? lastWeightUpdate;
+  DateTime? lastHeightUpdate;
+  DateTime? lastAgeUpdate;
 
   ParamRow({
     required this.icon,
@@ -110,7 +118,26 @@ class ParamRow extends StatelessWidget {
     required this.hintText,
     required this.value,
     required this.onUpdate,
+    this.lastAgeUpdate,
+    this.lastHeightUpdate,
+    this.lastWeightUpdate,
   });
+
+  void UpdateWeightDate() {
+    lastWeightUpdate = DateTime.now();
+  }
+
+  void UpdateHeightDate() {
+    lastHeightUpdate = DateTime.now();
+  }
+
+  void UpdateAgeDate() {
+    lastAgeUpdate = DateTime.now();
+  }
+
+  String formatDate(DateTime date) {
+    return '${date.day}/${date.month}/${date.year}';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +162,7 @@ class ParamRow extends StatelessWidget {
                     TextButton(
                       child: Text('Aceptar'),
                       onPressed: () {
-                        onUpdate(int.parse(controller.text));
+                        onUpdate(double.parse(controller.text));
                         Navigator.pop(context);
                       },
                     ),
@@ -144,9 +171,29 @@ class ParamRow extends StatelessWidget {
               },
             );
           },
-          child: Text(
-            '$title: $value',
-            style: TextStyle(fontSize: 20),
+          child: RichText(
+            text: TextSpan(
+              style: DefaultTextStyle.of(context).style,
+              children: <TextSpan>[
+                TextSpan(
+                  text: title == 'Peso'
+                      ? '$title: $value kg '
+                      : (title == 'Altura'
+                          ? '$title: $value cm '
+                          : '$title: ${value.toInt()} años '),
+                  style: TextStyle(fontSize: 20),
+                ),
+                TextSpan(
+                  text: title == 'Peso'
+                      ? '  (Actualizado el ${formatDate(lastWeightUpdate!)})'
+                      : (title == 'Altura'
+                          ? '  (Actualizado el ${formatDate(lastHeightUpdate!)})'
+                          : '  (Actualizado el ${formatDate(lastAgeUpdate!)})'),
+                  style:
+                      TextStyle(fontSize: 14), // smaller font size for the date
+                ),
+              ],
+            ),
           ),
         ),
       ],

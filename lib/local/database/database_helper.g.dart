@@ -95,7 +95,7 @@ class _$DatabaseHelper extends DatabaseHelper {
         );
 
         await database.execute(
-          'CREATE TABLE IF NOT EXISTS `ParametrosPersonales` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `peso` INTEGER, `altura` INTEGER, `edad` INTEGER, `sexo` INTEGER, `medidasMuscularesId` INTEGER, FOREIGN KEY(`medidasMuscularesId`) REFERENCES `MedidasMusculares`(`id`))',
+          'CREATE TABLE IF NOT EXISTS `ParametrosPersonales` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `nombre` TEXT NOT NULL, `peso` DOUBLE, `altura` DOUBLE, `edad` INTEGER, `sexo` DOUBLE, `medidasMuscularesId` DOUBLE, FOREIGN KEY(`medidasMuscularesId`) REFERENCES `MedidasMusculares`(`id`))',
         );
         await callback?.onCreate?.call(database, version);
       },
@@ -242,6 +242,7 @@ class _$ParametrosPersonalesDao extends ParametrosPersonalesDao {
             'ParametrosPersonales',
             (ParametrosPersonales item) => <String, Object?>{
                   'id': item.id,
+                  'nombre': item.nombre,
                   'peso': item.peso,
                   'edad': item.edad,
                   'altura': item.altura,
@@ -254,6 +255,7 @@ class _$ParametrosPersonalesDao extends ParametrosPersonalesDao {
             ['id'],
             (ParametrosPersonales item) => <String, Object?>{
                   'id': item.id,
+                  'nombre': item.nombre,
                   'peso': item.peso,
                   'edad': item.edad,
                   'altura': item.altura,
@@ -266,6 +268,7 @@ class _$ParametrosPersonalesDao extends ParametrosPersonalesDao {
             ['id'],
             (ParametrosPersonales item) => <String, Object?>{
                   'id': item.id,
+                  'nombre': item.nombre,
                   'peso': item.peso,
                   'edad': item.edad,
                   'altura': item.altura,
@@ -292,10 +295,11 @@ class _$ParametrosPersonalesDao extends ParametrosPersonalesDao {
     return _queryAdapter.queryList('SELECT * FROM ParametrosPersonales',
         mapper: (Map<String, Object?> row) => ParametrosPersonales(
             id: row['id'] as int?,
-            peso: row['peso'] as int,
+            nombre: row['nombre'] as String,
+            peso: row['peso'] as double,
             edad: row['edad'] as int,
-            altura: row['altura'] as int,
-            sexo: row['sexo'] as int,
+            altura: row['altura'] as double,
+            sexo: row['sexo'] as double,
             idMedidasMusculares: row['medidasMuscularesId'] as int?));
   }
 
@@ -305,10 +309,11 @@ class _$ParametrosPersonalesDao extends ParametrosPersonalesDao {
         'SELECT * FROM ParametrosPersonales ORDER BY id ASC LIMIT 1',
         mapper: (Map<String, Object?> row) => ParametrosPersonales(
             id: row['id'] as int?,
-            peso: row['peso'] as int,
+            nombre: row['nombre'] as String,
+            peso: row['peso'] as double,
             edad: row['edad'] as int,
-            altura: row['altura'] as int,
-            sexo: row['sexo'] as int,
+            altura: row['altura'] as double,
+            sexo: row['sexo'] as double,
             idMedidasMusculares: row['medidasMuscularesId'] as int?));
   }
 

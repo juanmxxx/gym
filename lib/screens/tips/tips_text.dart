@@ -4,16 +4,16 @@ class TipsText {
   List suplements = [
     {
       "Sustancia":
-          "Es un elemento natural ya que en micho de los casos son obtenidas a traves del suero que produce la leche y en ningun caso se obtiene de un proceso quimico antinatural.",
+          "Es un elemento natural ya que en mucho de los casos son obtenidas a traves del suero que produce la leche y en ningun caso se obtiene de un proceso quimico antinatural.",
       "Obtencion":
           "Una vez obtienes la sustancia (leche en este caso) lo proximo es separar la leche del suero, seguido hay que deshidratar el suero obtenido y previamente separado para luego al final darle el sabor que se quiera dar (chocolate, fresa, nata, vainilla...)",
       "Funcion":
           "Basicamente lo que produce la proteina en tu cuerpo es la regeneracion de tejidos musculares afectados o dañados durante la realizacion de actividad fisica, ayuda a que la recuperacion de estos sea mas rapida y que nuestro organismo obtenga las proteinas necesarias en paralelo a la actividad fisica de forma mas economica. Ya que si tuviesemos que obtener esas proteinas a partir de la comida el gasto en esta seria bastante mas elevado.",
-      "Ventajas": "\n-Más economico frente a nutrirnos de alimentos directamente"
-          "\n-Facil y rapida preparacion (la mayoria de proteinas son solubles en casi cualquier liquido (incluso agua fria), y la preparacion se basa en echar la proteina y el liquido, agitar y tomar."
-          "\n-Ayuda al organismo a obtener el aporte proteico necesario para la actividad fisica."
-          "\n-Se pueden adquirir de gran cantidad de sabores."
-          "\n-Ayuda a controlar el apetito.",
+      "Ventajas": "\n\t- Más economico frente a nutrirnos de alimentos directamente"
+          "\n\t- Facil y rapida preparacion (la mayoria de proteinas son solubles en casi cualquier liquido (incluso agua fria), y la preparacion se basa en echar la proteina y el liquido, agitar y tomar."
+          "\n\t- Ayuda al organismo a obtener el aporte proteico necesario para la actividad fisica."
+          "\n\t- Se pueden adquirir de gran cantidad de sabores."
+          "\n\t- Ayuda a controlar el apetito.",
       "Moraleja":
           "Estas ventajas se dan si se combina SIEMPRE el uso de proteinas con la realizacion de ejercicio."
     },
@@ -25,12 +25,12 @@ class TipsText {
       "Funcion":
           "La que esta hace en tu cuerpo es proporcionarte una mayor energia a los musculos (consumir preferenmente antes de cada entrenamiento) de cara al ejercicio y por ende generar una menor fatiga durante las largas sesiones. se recomienda consumirla cada dia en las mismas cantidades, en cuanto a cantidad la mayoria de expertos estan de acuerdo en base a la masa corporal, por ejemplo una persona de 70kg deberia consumir solo 7 gramos de creatina al dia, para alguien de 120 kilos, serian 12 gramos diarios. Aunque no tiene que ser exacto, pero si algo constante para notar sus efectos.",
       "Ventajas":
-          "\n-Es un suplemento barato y se toma tiempo en acabar (500 gramos rondan 12 - 16 euros)."
-              "\n-Combate la fatiga y cansancio muscular durante las sesiones."
-              "\n-Ayuda a mejorar la memoria"
-              "\n-Reduce el riesgo de lesiones"
-              "\n-Beneficios para la salud osea"
-              "\n-Contribuye a la hidratacion y regeneracion de la piel",
+          "\n\t- Es un suplemento barato y se toma tiempo en acabar (500 gramos rondan 12 u/o 16 euros)."
+              "\n\t- Combate la fatiga y cansancio muscular durante las sesiones."
+              "\n\t- Ayuda a mejorar la memoria"
+              "\n\t- Reduce el riesgo de lesiones"
+              "\n\t- Beneficios para la salud osea"
+              "\n\t- Contribuye a la hidratacion y regeneracion de la piel",
       "Moraleja":
           "Es un suplemento que se puede tomar durante todo el año, pero se recomienda hacer descansos de 1 mes cada 3 meses para que el cuerpo no se acostumbre a su consumo y no pierda efectividad."
     },
@@ -41,12 +41,12 @@ class TipsText {
           "Se obtiene directamente del tejido cartilaginoso del animal, una vez obtenida la materia prima posteriormente es secado y micropulverizado.",
       "Funcion":
           "Ayuda sobretodo en ciertos deportes donde el desgaste de las articulaciones es mayor, como por ejemplo el running donde las articulaciones de la rodilla sufren mas, o motociclistas donde por sus posturas y a veces las heridas que estos sufren ayudandoles a regenerar esa piel o tejido cartilaginoso aunque tambien se puede aplicar al ambito del gimnasio sobre todo a la hora de realizacion en ejercicios de fuerza o peso pesado las articulaciones en algunos casos pueden verse tambien afectadas.",
-      "Ventajas": "-Aporte proteico. Los cartilagos tambien incluyen en gran porcentaje proteinas"
-          "\n-Ayuda a prevenir lesiones en las zonas criticas donde hay articulaciones (rodillas, tobillos....)"
-          "\n-Tiene propiedades antiinflamarias para las articulaciones."
-          "\n-Gran aliado contra la osteoporosis."
-          "\n-Incluso previene el glaucoma al recudir la presion ocular."
-          "\n-Gran cantidad de colageno muy beneficioso para la piel, ayuda en la recuperacion del tejido en heridas.",
+      "Ventajas": "\n\t- Aporte proteico. Los cartilagos tambien incluyen en gran porcentaje proteinas"
+          "\n\t- Ayuda a prevenir lesiones en las zonas criticas donde hay articulaciones (rodillas, tobillos....)"
+          "\n\t- Tiene propiedades antiinflamarias para las articulaciones."
+          "\n\t- Gran aliado contra la osteoporosis."
+          "\n\t- Incluso previene el glaucoma al recudir la presion ocular."
+          "\n\t- Gran cantidad de colageno muy beneficioso para la piel, ayuda en la recuperacion del tejido en heridas.",
       "Moraleja":
           "Importante SIEMPRE combinar el uso de este suplemento con la realizacion de ejercicio en la que haya bastante carga articular."
     },
@@ -57,11 +57,11 @@ class TipsText {
           "Los aminoácidos se obtienen a través de la descomposición de las proteínas en los alimentos que consumimos. Una vez que las proteínas se descomponen en aminoácidos, estos se utilizan para construir nuevas proteínas en nuestro cuerpo.",
       "Funcion":
           "Los aminoácidos son esenciales para la construcción y reparación de tejidos, incluyendo el tejido muscular. Son especialmente útiles para aquellos que realizan entrenamientos de fuerza o resistencia, ya que pueden ayudar a mejorar la recuperación muscular y reducir la fatiga.",
-      "Ventajas": "\n-Ayudan a la recuperación muscular después del ejercicio."
-          "\n-Reducen la fatiga y mejoran el rendimiento deportivo."
-          "\n-Pueden ayudar a prevenir la pérdida de masa muscular durante la dieta."
-          "\n-Pueden ser beneficiosos para la salud del corazón y la función cerebral."
-          "\n-Pueden ayudar a mejorar la salud de la piel, el cabello y las uñas.",
+      "Ventajas": "\n\t- Ayudan a la recuperación muscular después del ejercicio."
+          "\n\t- Reducen la fatiga y mejoran el rendimiento deportivo."
+          "\n\t- Pueden ayudar a prevenir la pérdida de masa muscular durante la dieta."
+          "\n\t- Pueden ser beneficiosos para la salud del corazón y la función cerebral."
+          "\n\t- Pueden ayudar a mejorar la salud de la piel, el cabello y las uñas.",
       "Moraleja":
           "Es importante combinar SIEMPRE el uso de los aminoacidos con la realizacion de ejercicio para obtener los mejores resultados."
     }
@@ -88,11 +88,30 @@ class TipsText {
     },
   ];
 
+  List generalTips = [
+    {
+      "Parrafo 1":
+          "La alimentación es un aspecto fundamental para el rendimiento deportivo. Una dieta equilibrada y variada que incluya suficientes proteínas, carbohidratos, grasas, vitaminas y minerales es esencial para mantener la energía y la salud durante el entrenamiento.",
+      "Parrafo 2":
+          "El descanso es igualmente importante. Dormir lo suficiente y permitir que los músculos se recuperen entre sesiones de entrenamiento es crucial para evitar lesiones y mejorar el rendimiento.",
+      "Parrafo 3":
+          "La hidratación es clave para mantener la salud y el rendimiento deportivo. Beber suficiente agua antes, durante y después del ejercicio es fundamental para mantener la temperatura corporal y prevenir la deshidratación.",
+      "Parrafo 4":
+          "Escuchar a tu cuerpo es esencial. Si sientes dolor o fatiga excesiva, es importante detenerte y descansar. No te fuerces más allá de tus límites, ya que esto puede provocar lesiones y afectar tu rendimiento a largo plazo.",
+      "Parrafo 5":
+          "La motivación es un factor importante para mantener la constancia en el entrenamiento. Establecer metas realistas y celebrar los logros puede ayudarte a mantenerte enfocado y motivado para seguir mejorando.",
+    }
+  ];
+
   List getSuplements() {
     return suplements;
   }
 
   List getTrainings() {
     return trainings;
+  }
+
+  List getGeneralTips() {
+    return generalTips;
   }
 }
