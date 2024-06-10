@@ -211,16 +211,22 @@ class _Step2ViewState extends State<Step2View> {
                           unselectedColor: TColor.white,
                           borderColor: TColor.primary,
                           children: const {
-                            true:
-                                Text(" Varón ", style: TextStyle(fontSize: 18)),
+                            true: Text(" Hombre ",
+                                style: TextStyle(fontSize: 18)),
                             false:
-                                Text(" Hembra ", style: TextStyle(fontSize: 18))
+                                Text(" Mujer ", style: TextStyle(fontSize: 18))
                           },
                           onValueChanged: (isMaleVal) {
                             setState(() {
                               isMale = isMaleVal;
-                              updateParameters();
                               asignado = true;
+
+                              if (asignado) {
+                                pesoCorporal.text =
+                                    selectWeight?.toString() ?? '';
+                                altura.text = selectHeight?.toString() ?? '';
+                                edad.text = selectAge?.toString() ?? '';
+                              }
                             });
                           },
                           padding: EdgeInsets.zero,
@@ -252,6 +258,7 @@ class _Step2ViewState extends State<Step2View> {
               child: RoundButton(
                 title: "Comenzemos!",
                 onPressed: () {
+                  updateParameters(); // Call updateParameters here
                   ParametrosPersonales parametrosPersonales =
                       ParametrosPersonales(
                           nombre: nombre,
