@@ -96,7 +96,7 @@ class _Step2ViewState extends State<Step2View> {
               color: TColor.primary, fontSize: 20, fontWeight: FontWeight.w700),
         ),
       ),
-      body: SafeArea(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             Padding(
@@ -231,7 +231,7 @@ class _Step2ViewState extends State<Step2View> {
                 ],
               ),
             ),
-            const Spacer(),
+            SizedBox(height: media.width * 0.6),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [1, 2].map((pObj) {

@@ -16,7 +16,7 @@ class EntrenamientoScreen extends StatefulWidget {
 class _EntrenamientoScreenState extends State<EntrenamientoScreen> {
   List<EjercicioLocal> ejercicios = [];
   late final DatabaseHelper db;
-  late ParametrosPersonales? parametrosUsuario;
+  late ParametrosPersonales? parametrosUsuario = null;
 
   @override
   void initState() {

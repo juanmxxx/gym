@@ -28,10 +28,12 @@ class _Step1ViewState extends State<Step1View> {
                 fontWeight: FontWeight.w700),
           ),
         ),
-        body: SafeArea(
+        body: SingleChildScrollView(
           child: Column(
             children: [
-              const Spacer(),
+              SizedBox(
+                  height:
+                      30), // Add some space between the AppBar and the Image
               Image.asset(
                 "assets/step_1.png",
                 width: media.width * 0.6,
@@ -76,7 +78,7 @@ class _Step1ViewState extends State<Step1View> {
                             10), // Add some space between the Text and TextField
                     Expanded(
                       child: TextField(
-                          keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.name,
                           controller: nombre,
                           decoration:
                               InputDecoration(border: InputBorder.none)),
@@ -84,7 +86,7 @@ class _Step1ViewState extends State<Step1View> {
                   ],
                 ),
               ),
-              const Spacer(),
+              SizedBox(height: media.height * 0.05),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [1, 2].map((pObj) {
@@ -100,6 +102,7 @@ class _Step1ViewState extends State<Step1View> {
                   );
                 }).toList(),
               ),
+              // Add some space between the TextField and the Button
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 30, horizontal: 25),

@@ -9,6 +9,7 @@ import 'package:gym/screens/login/main_screen.dart';
 import 'package:gym/screens/user_screen.dart';
 import 'package:gym/screens/tips_screen.dart';
 import 'package:gym/local/database/database.dart';
+
 import '../../common/color_extension.dart';
 
 void main() async {
