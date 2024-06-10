@@ -123,9 +123,15 @@ class CardEjerciseFrequency extends StatelessWidget {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: Text('Calorias diarias recomendables'),
+                title: Text(
+                  'Calorias diarias recomendables',
+                  style: TextStyle(fontSize: 15),
+                ),
 
-                content: Text(recomendado.toString()), //Meter resultado
+                content: Text(
+                  recomendado.toString(),
+                  style: TextStyle(fontSize: 30),
+                ), //Meter resultado
                 actions: <Widget>[
                   TextButton(
                     child: Text('Cerrar'),

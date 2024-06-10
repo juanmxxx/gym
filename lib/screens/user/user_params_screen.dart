@@ -190,7 +190,7 @@ class ParamRow extends StatelessWidget {
                           ? '  (Actualizado el ${formatDate(lastHeightUpdate!)})'
                           : '  (Actualizado el ${formatDate(lastAgeUpdate!)})'),
                   style:
-                      TextStyle(fontSize: 14), // smaller font size for the date
+                      TextStyle(fontSize: 11), // smaller font size for the date
                 ),
               ],
             ),
