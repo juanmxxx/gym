@@ -90,7 +90,7 @@ class _UsuarioParametrosScreenState extends State<UsuarioParametrosScreen> {
                   Icon(Icons.male, size: 30),
                   SizedBox(width: 20),
                   Text(
-                    'Sexo: ${parametrosUsuario?.sexo == 1 ? 'Varón' : 'Hembra'}',
+                    'Sexo: ${parametrosUsuario?.sexo == 1 ? 'Másculino' : 'Femenino'}',
                     style: TextStyle(fontSize: 20),
                   ),
                 ],

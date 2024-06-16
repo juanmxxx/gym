@@ -32,6 +32,7 @@ class _Step2ViewState extends State<Step2View> {
     TextEditingController pesoCorporal = TextEditingController();
     TextEditingController altura = TextEditingController();
     TextEditingController edad = TextEditingController();
+    ValueNotifier<bool> isMaleNotifier = ValueNotifier<bool>(true);
 
     if (asignado) {
       pesoCorporal.text = selectWeight.toString();
@@ -205,32 +206,31 @@ class _Step2ViewState extends State<Step2View> {
                               fontSize: 20,
                               fontWeight: FontWeight.w700),
                         ),
-                        CupertinoSegmentedControl(
-                          groupValue: isMale,
-                          selectedColor: TColor.primary,
-                          unselectedColor: TColor.white,
-                          borderColor: TColor.primary,
-                          children: const {
-                            true: Text(" Hombre ",
-                                style: TextStyle(fontSize: 18)),
-                            false:
-                                Text(" Mujer ", style: TextStyle(fontSize: 18))
+                        ValueListenableBuilder<bool>(
+                          valueListenable: isMaleNotifier,
+                          builder: (context, isMaleValue, child) {
+                            return CupertinoSegmentedControl<bool>(
+                              groupValue: isMaleValue,
+                              selectedColor: TColor.primary,
+                              unselectedColor: TColor.white,
+                              borderColor: TColor.primary,
+                              children: const {
+                                true: Text(" Hombre ",
+                                    style: TextStyle(fontSize: 18)),
+                                false: Text(" Mujer ",
+                                    style: TextStyle(fontSize: 18)),
+                              },
+                              onValueChanged: (isMaleVal) {
+                                isMaleNotifier.value =
+                                    isMaleVal; // This will automatically update the UI
+                                isMale =
+                                    isMaleVal; // Update the isMale variable to reflect the new value
+                                asignado = true;
+                              },
+                              padding: EdgeInsets.zero,
+                            );
                           },
-                          onValueChanged: (isMaleVal) {
-                            setState(() {
-                              isMale = isMaleVal;
-                              asignado = true;
-
-                              if (asignado) {
-                                pesoCorporal.text =
-                                    selectWeight?.toString() ?? '';
-                                altura.text = selectHeight?.toString() ?? '';
-                                edad.text = selectAge?.toString() ?? '';
-                              }
-                            });
-                          },
-                          padding: EdgeInsets.zero,
-                        )
+                        ),
                       ],
                     ),
                   ),
