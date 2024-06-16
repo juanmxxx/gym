@@ -3,6 +3,7 @@ import 'package:gym/screens/tips/tips_text.dart';
 
 class ProteinTipsScreen extends StatelessWidget {
   var pObj;
+
   @override
   Widget build(BuildContext context) {
     pObj = TipsText().getSuplements()[0] as Map? ?? {};
@@ -16,7 +17,6 @@ class ProteinTipsScreen extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.all(20.0),
             child: Column(
-              // Change this to Column
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
@@ -31,36 +31,29 @@ class ProteinTipsScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 20), // Change this to height
-                Text(
-                  pObj["Sustancia"].toString(),
-                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 30),
-                Text(
-                  pObj["Obtencion"].toString(),
-                  style: TextStyle(fontSize: 10),
-                ),
-                SizedBox(height: 30),
-                Text(
-                  pObj["Funcion"].toString(),
-                  style: TextStyle(fontSize: 10),
-                ),
-                SizedBox(height: 30),
-                Text(
-                  pObj["Ventajas"].toString(),
-                  style: TextStyle(fontSize: 10),
-                ),
-                SizedBox(height: 30),
-                Text(
-                  pObj["Moraleja"].toString(),
-                  style: TextStyle(fontSize: 10),
-                ),
+                SizedBox(height: 20),
+                _buildExpansionTile('Sustancia', pObj["Sustancia"].toString()),
+                _buildExpansionTile('Obtencion', pObj["Obtencion"].toString()),
+                _buildExpansionTile('Funcion', pObj["Funcion"].toString()),
+                _buildExpansionTile('Ventajas', pObj["Ventajas"].toString()),
+                _buildExpansionTile('Moraleja', pObj["Moraleja"].toString()),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildExpansionTile(String title, String content) {
+    return ExpansionTile(
+      title: Text(title,
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+      children: <Widget>[
+        ListTile(
+          title: Text(content, style: TextStyle(fontSize: 16)),
+        ),
+      ],
     );
   }
 }

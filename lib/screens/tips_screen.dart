@@ -12,6 +12,7 @@ import 'package:gym/screens/tips/trainings/resistance_training_tips_screen.dart'
 import 'package:gym/screens/tips/trainings/flexibility_training_tips_screen.dart';
 import 'package:gym/screens/tips/suplements/aminoacids_tips_screen.dart';
 import 'package:gym/screens/tips/general_tips_screen.dart';
+import 'package:marquee/marquee.dart';
 
 class TipsScreen extends StatelessWidget {
   @override
@@ -47,6 +48,24 @@ class TipsScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 TrainingsScreenBar(),
+                Container(
+                  height: 20,
+                  child: Marquee(
+                    text:
+                        '¡ Estos consejos nunca deben ser tomados como una verdad absoluta, siempre consulta con un profesional de la salud antes de tomar cualquier decisión !',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    scrollAxis: Axis.horizontal,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    blankSpace: 30.0,
+                    velocity: 70.0,
+                    pauseAfterRound: Duration(seconds: 1),
+                    startPadding: 10.0,
+                    accelerationDuration: Duration(seconds: 1),
+                    accelerationCurve: Curves.linear,
+                    decelerationDuration: Duration(milliseconds: 500),
+                    decelerationCurve: Curves.easeOut,
+                  ),
+                ),
               ],
             ),
           ),
@@ -226,7 +245,7 @@ class TrainingsScreenBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
+      height: 140,
       child: ListView.builder(
           itemCount: 3,
           scrollDirection: Axis.horizontal,

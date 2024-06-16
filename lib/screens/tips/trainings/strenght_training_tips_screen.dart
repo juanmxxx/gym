@@ -33,21 +33,28 @@ class StrengthTrainingTipsScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 20), // Change this to height
-                Text(
-                  pObj["Parrafo 1"].toString(),
-                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 30),
-                Text(
-                  pObj["Parrafo 2"].toString(),
-                  style: TextStyle(fontSize: 10),
-                ),
+                SizedBox(height: 20),
+                _buildExpansionTile(
+                    "Complementar alimentación", pObj["Parrafo 1"].toString()),
+                _buildExpansionTile(
+                    "Aspectos clave", pObj["Parrafo 2"].toString()),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildExpansionTile(String title, String content) {
+    return ExpansionTile(
+      title: Text(title,
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+      children: <Widget>[
+        ListTile(
+          title: Text(content, style: TextStyle(fontSize: 16)),
+        ),
+      ],
     );
   }
 }
