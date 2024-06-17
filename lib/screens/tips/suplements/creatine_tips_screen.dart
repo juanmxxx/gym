@@ -10,7 +10,7 @@ class CreatineTipsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tips para creatina en polvo'),
+        title: Text('Creatina'),
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -32,8 +32,8 @@ class CreatineTipsScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
                 _buildExpansionTile('Sustancia', pObj["Sustancia"].toString()),
-                _buildExpansionTile('Obtencion', pObj["Obtencion"].toString()),
-                _buildExpansionTile('Funcion', pObj["Funcion"].toString()),
+                _buildExpansionTile('Obtención', pObj["Obtencion"].toString()),
+                _buildExpansionTile('Función', pObj["Funcion"].toString()),
                 _buildExpansionTile('Ventajas', pObj["Ventajas"].toString()),
                 _buildExpansionTile('Moraleja', pObj["Moraleja"].toString()),
               ],

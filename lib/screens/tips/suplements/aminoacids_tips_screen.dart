@@ -19,7 +19,7 @@ class _AminoacidsTipsScreenState extends State<AminoacidsTipsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tips para aminoacidos'),
+        title: Text('Aminoacidos'),
       ),
       body: PageView.builder(
         itemCount: supplements.length,
@@ -48,8 +48,8 @@ class _AminoacidsTipsScreenState extends State<AminoacidsTipsScreen> {
                     _buildExpansionTile(
                         'Sustancia', pObj["Sustancia"].toString()),
                     _buildExpansionTile(
-                        'Obtencion', pObj["Obtencion"].toString()),
-                    _buildExpansionTile('Funcion', pObj["Funcion"].toString()),
+                        'Obtención', pObj["Obtencion"].toString()),
+                    _buildExpansionTile('Función', pObj["Funcion"].toString()),
                     _buildExpansionTile(
                         'Ventajas', pObj["Ventajas"].toString()),
                     _buildExpansionTile(

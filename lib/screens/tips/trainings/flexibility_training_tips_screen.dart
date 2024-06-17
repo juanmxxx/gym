@@ -10,7 +10,7 @@ class FlexibilityTrainingTipsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Consejos para entrenamiento de flexibilidad'),
+        title: Text('Flexibilidad'),
       ),
       body: SingleChildScrollView(
         child: Center(

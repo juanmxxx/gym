@@ -32,7 +32,7 @@ class TipsScreen extends StatelessWidget {
                 TipsGeneralScreen(),
                 SizedBox(height: 40),
                 Text(
-                  'Suplementos',
+                  'Suplementación',
                   style: TextStyle(fontSize: 20),
                 ),
                 SizedBox(height: 10),
@@ -43,7 +43,7 @@ class TipsScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 30),
                 Text(
-                  'Entrenamientos',
+                  'Entrenamiento',
                   style: TextStyle(fontSize: 20),
                 ),
                 SizedBox(height: 10),
@@ -52,7 +52,7 @@ class TipsScreen extends StatelessWidget {
                   height: 20,
                   child: Marquee(
                     text:
-                        '¡ Estos consejos nunca deben ser tomados como una verdad absoluta, siempre consulta con un profesional de la salud antes de tomar cualquier decisión !',
+                        '¡ Estos consejos nunca deben ser tomados como una verdad absoluta, siempre consulta con un profesional !',
                     style: TextStyle(fontWeight: FontWeight.bold),
                     scrollAxis: Axis.horizontal,
                     crossAxisAlignment: CrossAxisAlignment.start,

@@ -10,7 +10,7 @@ class ResistanceTrainingTipsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Consejos para entrenamiento de resistencia'),
+        title: Text('Resistencia'),
       ),
       body: SingleChildScrollView(
         child: Center(

@@ -10,7 +10,7 @@ class SharkCartilageTipsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tips para cartílago de tiburón en polvo'),
+        title: Text('Cartilago de tiburón'),
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -33,8 +33,8 @@ class SharkCartilageTipsScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
                 _buildExpansionTile('Sustancia', pObj["Sustancia"].toString()),
-                _buildExpansionTile('Obtencion', pObj["Obtencion"].toString()),
-                _buildExpansionTile('Funcion', pObj["Funcion"].toString()),
+                _buildExpansionTile('Obtención', pObj["Obtencion"].toString()),
+                _buildExpansionTile('Función', pObj["Funcion"].toString()),
                 _buildExpansionTile('Ventajas', pObj["Ventajas"].toString()),
                 _buildExpansionTile('Moraleja', pObj["Moraleja"].toString()),
               ],
