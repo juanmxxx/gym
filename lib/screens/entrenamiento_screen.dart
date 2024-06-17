@@ -46,8 +46,24 @@ class _EntrenamientoScreenState extends State<EntrenamientoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Define the correct order of the days
+    List<String> orderedDays = [
+      'Lunes',
+      'Martes',
+      'Miercoles',
+      'Jueves',
+      'Viernes',
+      'Sabado',
+      'Domingo'
+    ];
+
+    // Extract the days from ejercicios and ensure they are unique
     List<String> diasSemana =
         ejercicios.map((e) => e.dayOfWeek).toSet().toList();
+
+    // Sort diasSemana based on the order in orderedDays
+    diasSemana.sort(
+        (a, b) => orderedDays.indexOf(a).compareTo(orderedDays.indexOf(b)));
 
     return Scaffold(
       appBar: AppBar(
@@ -86,51 +102,71 @@ class _EntrenamientoScreenState extends State<EntrenamientoScreen> {
                 ],
               ),
             )
-          : ListView.builder(
-              itemCount: diasSemana.length,
-              itemBuilder: (BuildContext context, int index) {
-                final diaSemana = diasSemana[index];
-                final ejerciciosDia =
-                    ejercicios.where((e) => e.dayOfWeek == diaSemana).toList();
+          : Column(
+              children: [
+                SizedBox(height: 15),
+                if (ejercicios.length < 10)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      '¡ Tu rutina semanal, a entrenar !',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                SizedBox(height: 15),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: diasSemana.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final diaSemana = diasSemana[index];
+                      final ejerciciosDia = ejercicios
+                          .where((e) => e.dayOfWeek == diaSemana)
+                          .toList();
 
-                return Column(
-                  children: [
-                    Card(
-                      child: ExpansionTile(
-                        title: Text(diaSemana),
-                        onExpansionChanged: (bool expanded) {
-                          if (expanded) {
-                            // Call your method to refresh data here
-                            refreshData(); // Assuming refreshData is your method to fetch data from DB
-                          }
-                        },
-                        children: List.generate(
-                          ejerciciosDia.length,
-                          (index) => GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => EjercicioScreenLocal(
-                                    nombrEjercicio: ejerciciosDia[index].nombre,
-                                    gifAyuda: ejerciciosDia[index].gifAyuda,
-                                    descripcion:
-                                        ejerciciosDia[index].descripcion,
-                                    id: ejerciciosDia[index].id ?? 0,
+                      return Column(
+                        children: [
+                          Card(
+                            child: ExpansionTile(
+                              title: Text(
+                                  diaSemana), // Display the day of the week
+                              onExpansionChanged: (bool expanded) {
+                                if (expanded) {
+                                  refreshData();
+                                }
+                              },
+                              children: List.generate(
+                                ejerciciosDia.length,
+                                (index) => GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            EjercicioScreenLocal(
+                                          nombrEjercicio:
+                                              ejerciciosDia[index].nombre,
+                                          gifAyuda:
+                                              ejerciciosDia[index].gifAyuda,
+                                          descripcion:
+                                              ejerciciosDia[index].descripcion,
+                                          id: ejerciciosDia[index].id ?? 0,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: ExercicesLocalScreen(
+                                    ejercicio: ejerciciosDia[index],
                                   ),
                                 ),
-                              );
-                            },
-                            child: ExercicesLocalScreen(
-                              ejercicio: ejerciciosDia[index],
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              },
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
       bottomNavigationBar: MenuScreen(
           onTap: (index) {
