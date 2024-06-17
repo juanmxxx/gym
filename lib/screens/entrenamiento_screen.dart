@@ -36,6 +36,14 @@ class _EntrenamientoScreenState extends State<EntrenamientoScreen> {
     parametrosUsuario = await db.parametrosPersonalesDao.readFirst();
   }
 
+  Future<void> refreshData() async {
+    db.ejercicioDao.readAll().then((value) {
+      if (mounted) {
+        setState(() => ejercicios = value);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     List<String> diasSemana =
@@ -55,7 +63,6 @@ class _EntrenamientoScreenState extends State<EntrenamientoScreen> {
                   IconButton(
                     icon: Icon(Icons.info),
                     onPressed: () {
-                      // Handle the button press here
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -91,35 +98,40 @@ class _EntrenamientoScreenState extends State<EntrenamientoScreen> {
                     Card(
                       child: ExpansionTile(
                         title: Text(diaSemana),
+                        onExpansionChanged: (bool expanded) {
+                          if (expanded) {
+                            // Call your method to refresh data here
+                            refreshData(); // Assuming refreshData is your method to fetch data from DB
+                          }
+                        },
                         children: List.generate(
-                            ejerciciosDia.length,
-                            (index) => GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            EjercicioScreenLocal(
-                                          nombrEjercicio:
-                                              ejerciciosDia[index].nombre,
-                                          gifAyuda:
-                                              ejerciciosDia[index].gifAyuda,
-                                          descripcion:
-                                              ejerciciosDia[index].descripcion,
-                                          id: ejerciciosDia[index].id ?? 0,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  child: ExercicesLocalScreen(
-                                    ejercicio: ejerciciosDia[index],
+                          ejerciciosDia.length,
+                          (index) => GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => EjercicioScreenLocal(
+                                    nombrEjercicio: ejerciciosDia[index].nombre,
+                                    gifAyuda: ejerciciosDia[index].gifAyuda,
+                                    descripcion:
+                                        ejerciciosDia[index].descripcion,
+                                    id: ejerciciosDia[index].id ?? 0,
                                   ),
-                                )),
+                                ),
+                              );
+                            },
+                            child: ExercicesLocalScreen(
+                              ejercicio: ejerciciosDia[index],
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ],
                 );
-              }),
+              },
+            ),
       bottomNavigationBar: MenuScreen(
           onTap: (index) {
             switch (index) {

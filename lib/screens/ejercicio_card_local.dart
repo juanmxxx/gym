@@ -31,8 +31,8 @@ class _ExercicesLocalScreenState extends State<ExercicesLocalScreen> {
                 width: double.infinity,
                 height: 200,
                 child: Stack(children: [
-                  _BackgroundImage(url: ejercicio.imagen),
-                  _EjerciseDetails(nombre: ejercicio.nombre)
+                  _backgroundImage(url: ejercicio.imagen),
+                  _ProductDetails(nombre: ejercicio.nombre)
                 ]),
               ),
             ),
@@ -42,10 +42,10 @@ class _ExercicesLocalScreenState extends State<ExercicesLocalScreen> {
   }
 }
 
-class _EjerciseDetails extends StatelessWidget {
+class _ProductDetails extends StatelessWidget {
   final String nombre;
 
-  const _EjerciseDetails({
+  const _ProductDetails({
     required this.nombre,
     Key? key,
   }) : super(key: key);
@@ -75,10 +75,10 @@ class _EjerciseDetails extends StatelessWidget {
   }
 }
 
-class _BackgroundImage extends StatelessWidget {
+class _backgroundImage extends StatelessWidget {
   final String? url;
 
-  const _BackgroundImage({
+  const _backgroundImage({
     Key? key,
     this.url,
   }) : super(key: key);
@@ -148,7 +148,7 @@ class _SelectParametersState extends State<SelectParameters> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text('Selecciona número de series'),
+                        title: Text('Selecciona un nuevo numero de series'),
                         content: TextField(
                           controller: seriesController,
                           decoration: InputDecoration(
@@ -159,10 +159,8 @@ class _SelectParametersState extends State<SelectParameters> {
                         actions: <Widget>[
                           TextButton(
                             child: Text('OK'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              setState(
-                                  () {}); // Refresh the state to update the UI
+                            onPressed: () async {
+                              updateEjercicio();
                             },
                           ),
                         ],
@@ -184,7 +182,8 @@ class _SelectParametersState extends State<SelectParameters> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text('Selecciona número repeticiones'),
+                        title:
+                            Text('Selecciona un nuevo numero de repeticiones'),
                         content: TextField(
                           controller: repetitionsController,
                           decoration: InputDecoration(
@@ -195,10 +194,8 @@ class _SelectParametersState extends State<SelectParameters> {
                         actions: <Widget>[
                           TextButton(
                             child: Text('OK'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              setState(
-                                  () {}); // Refresh the state to update the UI
+                            onPressed: () async {
+                              updateEjercicio();
                             },
                           ),
                         ],
@@ -220,7 +217,7 @@ class _SelectParametersState extends State<SelectParameters> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text('Select peso (kg)'),
+                        title: Text('Selecciona un nuevo peso (kg)'),
                         content: TextField(
                           controller: weightController,
                           decoration: InputDecoration(
@@ -232,24 +229,7 @@ class _SelectParametersState extends State<SelectParameters> {
                           TextButton(
                             child: Text('OK'),
                             onPressed: () async {
-                              final updatedEjercicio = EjercicioLocal(
-                                id: ejercicio.id,
-                                nombre: ejercicio.nombre,
-                                imagen: ejercicio.imagen,
-                                descripcion: ejercicio.descripcion,
-                                repeticiones:
-                                    int.parse(repetitionsController.text),
-                                series: int.parse(seriesController.text),
-                                peso: int.parse(weightController.text),
-                                dayOfWeek: ejercicio.dayOfWeek,
-                                gifAyuda: ejercicio.gifAyuda,
-                                tipo: ejercicio.tipo,
-                              );
-
-                              await widget.db.ejercicioDao
-                                  .updateEjercicio(updatedEjercicio);
-                              setState(() {});
-                              Navigator.of(context).pop();
+                              updateEjercicio();
                             },
                           ),
                         ],
@@ -265,5 +245,24 @@ class _SelectParametersState extends State<SelectParameters> {
         ],
       ),
     ]);
+  }
+
+  void updateEjercicio() async {
+    final updatedEjercicio = EjercicioLocal(
+      id: ejercicio.id,
+      nombre: ejercicio.nombre,
+      imagen: ejercicio.imagen,
+      descripcion: ejercicio.descripcion,
+      repeticiones: int.parse(repetitionsController.text),
+      series: int.parse(seriesController.text),
+      peso: int.parse(weightController.text),
+      dayOfWeek: ejercicio.dayOfWeek,
+      gifAyuda: ejercicio.gifAyuda,
+      tipo: ejercicio.tipo,
+    );
+
+    await widget.db.ejercicioDao.updateEjercicio(updatedEjercicio);
+    setState(() {});
+    Navigator.of(context).pop();
   }
 }
