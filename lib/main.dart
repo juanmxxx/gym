@@ -97,7 +97,7 @@ class _MyAppState extends State<MyApp> {
           'tips': (context) => TipsScreen(),
         },
         darkTheme: darkTheme,
-        home: isInitialized ? EntrenamientoScreen() : MainLoginScreen(),
+        home: /* isInitialized ? EntrenamientoScreen() :  */ MainLoginScreen(),
         debugShowCheckedModeBanner: false,
       ),
     );

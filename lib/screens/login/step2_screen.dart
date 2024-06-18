@@ -133,7 +133,7 @@ class _Step2ViewState extends State<Step2View> {
                       Row(
                         children: [
                           Text(
-                            'Peso o masa corporal:',
+                            'Peso o masa corporal (kg):',
                             style: TextStyle(
                                 color: TColor.secondaryText,
                                 fontSize: 20,
@@ -155,7 +155,7 @@ class _Step2ViewState extends State<Step2View> {
                       Row(
                         children: [
                           Text(
-                            'Altura:',
+                            'Altura (cm):',
                             style: TextStyle(
                                 color: TColor.secondaryText,
                                 fontSize: 20,
@@ -175,7 +175,7 @@ class _Step2ViewState extends State<Step2View> {
                       Row(
                         children: [
                           Text(
-                            'Edad:',
+                            'Edad (años):',
                             style: TextStyle(
                                 color: TColor.secondaryText,
                                 fontSize: 20,
@@ -258,13 +258,48 @@ class _Step2ViewState extends State<Step2View> {
               child: RoundButton(
                 title: "Comenzemos!",
                 onPressed: () {
+                  // First, parse the inputs to ensure they are in the correct format for comparison
+                  double peso = double.tryParse(pesoCorporal.text) ??
+                      -1; // Default to -1 if parsing fails
+                  double _altura = double.tryParse(altura.text) ?? -1;
+                  int _edad = int.tryParse(edad.text) ?? -1;
+
+                  // Check if any of the parameters is less than 0
+                  if (peso <= 0 ||
+                      _altura <= 0 ||
+                      _edad <= 0 ||
+                      _edad > 140 ||
+                      _altura > 250 ||
+                      peso > 500) {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Error'),
+                          content: Text(
+                              'Los parámetros personales no pueden ser negativos o exagerados'),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Text('OK'),
+                              onPressed: () {
+                                Navigator.of(context).pop(); // Close the dialog
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                    return; // Stop execution if any parameter is invalid
+                  }
+
+                  // Existing logic if all parameters are valid
                   updateParameters(); // Call updateParameters here
                   ParametrosPersonales parametrosPersonales =
                       ParametrosPersonales(
                           nombre: nombre,
-                          peso: double.parse(pesoCorporal.text),
-                          altura: double.parse(altura.text),
-                          edad: int.parse(edad.text),
+                          peso: peso,
+                          altura: _altura,
+                          edad: _edad,
                           sexo: isMale ? 1 : 0);
 
                   SubmitToLocalParametros(parametros: parametrosPersonales);

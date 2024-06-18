@@ -28,7 +28,7 @@ class _AdministracionScreenState extends State<AdministracionScreen> {
               .toList();
           return Card(
             child: ExpansionTile(
-              title: Text(tipo),
+              title: Text('${tipo[0].toUpperCase()}${tipo.substring(1)}'),
               children: List.generate(
                 ejercicios.length,
                 (index) => GestureDetector(

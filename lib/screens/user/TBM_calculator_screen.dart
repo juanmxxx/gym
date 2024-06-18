@@ -40,7 +40,7 @@ class _TBMCalculatorScreenState extends State<TBMCalculatorScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Calculadora Tasa Metabolica Basal (TMB)'),
+        title: Text('Calculadora TMB'),
       ),
       body: ListView(
         children: <Widget>[

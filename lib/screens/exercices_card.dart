@@ -35,7 +35,7 @@ class _ExercicesCardState extends State<ExercicesCard> {
                 height: 200,
                 child: Stack(children: [
                   _backgroundImage(url: ejercicio.imagen),
-                  _ProductDetails(nombre: ejercicio.nombre)
+                  _ExercicesCard(nombre: ejercicio.nombre)
                 ]),
               ),
             ),
@@ -44,10 +44,10 @@ class _ExercicesCardState extends State<ExercicesCard> {
   }
 }
 
-class _ProductDetails extends StatelessWidget {
+class _ExercicesCard extends StatelessWidget {
   final String nombre;
 
-  const _ProductDetails({
+  const _ExercicesCard({
     required this.nombre,
     super.key,
   });

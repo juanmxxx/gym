@@ -77,12 +77,12 @@ class ButtonsRow extends StatelessWidget {
             onPressed: () => Navigator.pop(context),
             icon: Icon(
               Icons.arrow_back_ios_new,
-              size: 40,
+              size: 30,
               color: Colors.white,
             ),
           ),
           SizedBox(width: 10), // Add some space between the buttons
-          Text(nombre, style: TextStyle(fontSize: 25)),
+          Text(nombre, style: TextStyle(fontSize: 15)),
         ],
       ),
     );
@@ -138,6 +138,7 @@ class _ExerciseFormState extends State<ExerciseForm> {
   TextEditingController peso = TextEditingController();
   TextEditingController repeticiones = TextEditingController();
   TextEditingController series = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final ejercicioService = Provider.of<EjerciciosServices>(context);
@@ -174,10 +175,10 @@ class _ExerciseFormState extends State<ExerciseForm> {
             items: <String>[
               'Lunes',
               'Martes',
-              'Miercoles',
+              'Miércoles',
               'Jueves',
               'Viernes',
-              'Sabado',
+              'Sábado',
               'Domingo'
             ].map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
@@ -188,19 +189,46 @@ class _ExerciseFormState extends State<ExerciseForm> {
           ),
           ElevatedButton(
             onPressed: () {
-              // Handle the form submission
-              print('Peso: ${peso.text}');
-              print('Series: ${series.text}');
-              print('Repetitions: ${repeticiones.text}');
-              print('Dia: $dropdownValue');
+              // Validate inputs before submitting
+              if ((int.tryParse(peso.text) ?? 0) <=
+                      0 || // Check if 'peso' is non-positive
+                  (int.tryParse(series.text) ?? 0) <=
+                      0 || // Check if 'series' is non-positive
+                  (int.tryParse(repeticiones.text) ?? 0) <= 0) {
+                // Show alert dialog if any value is 0 or negative
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Error'),
+                      content: Text(
+                          'Todos los valores deben ser positivos y mayores que 0.'),
+                      actions: <Widget>[
+                        TextButton(
+                          child: Text('Aceptar'),
+                          onPressed: () {
+                            Navigator.of(context).pop(); // Close the dialog
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              } else {
+                // Proceed with form submission if all values are valid
+                print('Peso: ${peso.text}');
+                print('Series: ${series.text}');
+                print('Repetitions: ${repeticiones.text}');
+                print('Dia: $dropdownValue');
 
-              SubmitToLocalEjercise(
-                  ejercicio: ejercicioFinal,
-                  repeticiones: int.parse(repeticiones.text),
-                  series: int.parse(series.text),
-                  peso: int.parse(peso.text),
-                  diaSemana: dropdownValue);
-              Navigator.pushReplacementNamed(context, 'administrar');
+                SubmitToLocalEjercise(
+                    ejercicio: ejercicioFinal,
+                    repeticiones: int.parse(repeticiones.text),
+                    series: int.parse(series.text),
+                    peso: int.parse(peso.text),
+                    diaSemana: dropdownValue);
+                Navigator.pushReplacementNamed(context, 'administrar');
+              }
             },
             child: Text('Aceptar'),
           ),

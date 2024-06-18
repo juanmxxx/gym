@@ -99,8 +99,8 @@ class _backgroundImage extends StatelessWidget {
 }
 
 class SelectParameters extends StatefulWidget {
-  EjercicioLocal ejercicio;
-  late final DatabaseHelper db;
+  final EjercicioLocal ejercicio;
+
   SelectParameters({required this.ejercicio});
 
   @override
@@ -109,6 +109,8 @@ class SelectParameters extends StatefulWidget {
 }
 
 class _SelectParametersState extends State<SelectParameters> {
+  late DatabaseHelper db;
+
   TextEditingController seriesController = TextEditingController();
   TextEditingController repetitionsController = TextEditingController();
   TextEditingController weightController = TextEditingController();
@@ -119,18 +121,17 @@ class _SelectParametersState extends State<SelectParameters> {
   @override
   void initState() {
     super.initState();
-    WidgetsFlutterBinding.ensureInitialized();
     Future.microtask(() async {
       await initializeDatabase();
     });
+
     seriesController.text = ejercicio.series.toString();
     repetitionsController.text = ejercicio.repeticiones.toString();
     weightController.text = ejercicio.peso.toString();
   }
 
   Future<void> initializeDatabase() async {
-    widget.db =
-        await $FloorDatabaseHelper.databaseBuilder('database.db').build();
+    db = await $FloorDatabaseHelper.databaseBuilder('database.db').build();
   }
 
   @override
@@ -160,7 +161,31 @@ class _SelectParametersState extends State<SelectParameters> {
                           TextButton(
                             child: Text('OK'),
                             onPressed: () async {
-                              updateEjercicio();
+                              int seriesValue =
+                                  int.tryParse(seriesController.text) ?? -1;
+                              if (seriesValue <= 0) {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text('Error'),
+                                      content: Text(
+                                          'El número de series no puede ser 0 o negativo.'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: Text('OK'),
+                                          onPressed: () {
+                                            Navigator.of(context)
+                                                .pop(); // Close the error dialog
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              } else {
+                                updateEjercicio();
+                              }
                             },
                           ),
                         ],
@@ -195,7 +220,31 @@ class _SelectParametersState extends State<SelectParameters> {
                           TextButton(
                             child: Text('OK'),
                             onPressed: () async {
-                              updateEjercicio();
+                              int repetitionsValue =
+                                  int.tryParse(repetitionsController.text) ??
+                                      -1;
+                              if (repetitionsValue <= 0) {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text('Error'),
+                                      content: Text(
+                                          'El número de repeticiones no puede ser 0 o negativo.'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: Text('OK'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              } else {
+                                updateEjercicio();
+                              }
                             },
                           ),
                         ],
@@ -223,13 +272,41 @@ class _SelectParametersState extends State<SelectParameters> {
                           decoration: InputDecoration(
                             labelText: 'Peso',
                           ),
-                          keyboardType: TextInputType.number,
+                          keyboardType:
+                              TextInputType.numberWithOptions(decimal: true),
                         ),
                         actions: <Widget>[
                           TextButton(
                             child: Text('OK'),
                             onPressed: () async {
-                              updateEjercicio();
+                              double weightValue =
+                                  double.tryParse(weightController.text) ??
+                                      -1; // Default to -1 if parsing fails
+                              if (weightValue <= 0) {
+                                // If weightValue is negative, show an error dialog
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text('Error'),
+                                      content: Text(
+                                          'El peso no puede ser 0 o negativo.'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: Text('OK'),
+                                          onPressed: () {
+                                            Navigator.of(context)
+                                                .pop(); // Close the error dialog
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              } else {
+                                // If weightValue is not negative, proceed with the update
+                                updateEjercicio();
+                              }
                             },
                           ),
                         ],
@@ -261,7 +338,7 @@ class _SelectParametersState extends State<SelectParameters> {
       tipo: ejercicio.tipo,
     );
 
-    await widget.db.ejercicioDao.updateEjercicio(updatedEjercicio);
+    await db.ejercicioDao.updateEjercicio(updatedEjercicio);
     setState(() {});
     Navigator.of(context).pop();
   }

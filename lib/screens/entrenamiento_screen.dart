@@ -50,10 +50,10 @@ class _EntrenamientoScreenState extends State<EntrenamientoScreen> {
     List<String> orderedDays = [
       'Lunes',
       'Martes',
-      'Miercoles',
+      'Miércoles',
       'Jueves',
       'Viernes',
-      'Sabado',
+      'Sábado',
       'Domingo'
     ];
 
